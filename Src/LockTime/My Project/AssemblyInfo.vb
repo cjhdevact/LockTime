@@ -14,7 +14,7 @@ Imports System.Windows
 <Assembly: AssemblyTitle("时钟锁屏")>
 <Assembly: AssemblyDescription("时钟锁屏")>
 <Assembly: AssemblyCompany("CJH")>
-<Assembly: AssemblyProduct("Fly Launcher")>
+<Assembly: AssemblyProduct("时钟锁屏")>
 <Assembly: AssemblyCopyright("Copyright © 2023-2025 CJH. All Rights Reserved.")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: ComVisible(false)>
