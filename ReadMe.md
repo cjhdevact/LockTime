@@ -1,4 +1,6 @@
-# LockTime - 时钟锁屏
+<h1 align="center">
+  LockTime - 时钟锁屏
+</h1>
 
 ## 关于本项目
 
