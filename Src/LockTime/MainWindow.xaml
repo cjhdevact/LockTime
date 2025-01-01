@@ -1,0 +1,91 @@
+﻿<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+        WindowStyle="None"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True"
+        Icon="appicon.ico"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        ui:WindowHelper.SystemBackdropType="Acrylic"
+        ui:TitleBar.IsBackButtonVisible="False"
+        ui:TitleBar.IsBackEnabled="False"
+        ui:WindowHelper.FixMaximizedWindow="True"
+        ui:TitleBar.Height="0"
+        xmlns:local="clr-namespace:LockTime"
+        mc:Ignorable="d"
+        Title="时钟锁屏" Height="600" Width="800">
+    <Grid x:Name="Grid1">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="timelabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="48"  />
+        <TextBlock Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="datelabel"  HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="48" />
+        <ui:CommandBar x:Name="CommandBar1" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" DockPanel.Dock="Bottom">
+            <ui:AppBarButton  x:Name="Exitb"  Label="退出" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Exitb_Click" ToolTipService.ToolTip="退出" >
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe711;" />
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+            <ui:AppBarSeparator/>
+            <ui:AppBarButton x:Name="Aboutb" Label="关于" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Aboutb_Click" ToolTipService.ToolTip="关于"  >
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe946;" />
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+            <ui:AppBarSeparator/>
+            <ui:AppBarButton x:Name="Themeb" Label="颜色" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Themeb_Click" ToolTipService.ToolTip="颜色">
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe793;" />
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+            <ui:AppBarButton x:Name="Backgroundb" Label="背景" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Backgroundb_Click" ToolTipService.ToolTip="背景">
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xf5ee;" />
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+            <ui:AppBarButton x:Name="Windowb" Label="窗口" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Windowsb_Click" ToolTipService.ToolTip="窗口模式" >
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xeb41;" />
+                    <!--<ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe740;" />-->
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+            <ui:AppBarButton x:Name="Centerb" Label="居中" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Click="Centerb_Click" ToolTipService.ToolTip="居中显示时间">
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xf5a9;" />
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+            <ui:AppBarButton x:Name="Topb" Label="顶部" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Topb_Click" ToolTipService.ToolTip="在顶部显示时间"  >
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xf596;" />
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+            <ui:AppBarButton x:Name="Bottomb" Label="底部" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Bottomb_Click" ToolTipService.ToolTip="在底部显示时间" >
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xf597;" />
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+            <ui:AppBarButton x:Name="Leftb" Label="左侧" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Leftb_Click" ToolTipService.ToolTip="在左边显示时间" >
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xf594;" />
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+            <ui:AppBarButton x:Name="Rightb" Label="右侧" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Rightb_Click" ToolTipService.ToolTip="在右边显示时间" >
+                <ui:AppBarButton.Icon>
+                    <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xf595;" />
+                </ui:AppBarButton.Icon>
+            </ui:AppBarButton>
+        </ui:CommandBar>
+    </Grid>
+</Window>
