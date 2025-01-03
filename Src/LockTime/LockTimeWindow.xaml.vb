@@ -17,7 +17,7 @@
 '****************************************************************************
 '/*****************************************************\
 '*                                                     *
-'*     LockTime - MainWindows.xaml.vb                  *
+'*     LockTime - LockTimeWindow.xaml.vb               *
 '*                                                     *
 '*     Copyright (c) CJH.                              *
 '*                                                     *
@@ -26,17 +26,108 @@
 '\*****************************************************/
 Imports System.Windows.Threading
 Imports Microsoft.VisualBasic
+Imports System.Drawing
 Imports iNKORE.UI.WPF.Modern.Controls
 Imports iNKORE.UI.WPF.Modern
 Imports iNKORE.UI.WPF.Modern.Controls.Helpers
+Imports System.Reflection
+Imports Microsoft.Win32
 
 Class MainWindow
     Dim Timer1 As New DispatcherTimer
+    '获取系统版本函数
+    Function GetOSVersion() As Version
+        Dim strBuild1, strBuild2, strBuild3, strBuild4 As String
+        Try
+            Dim regKey As Microsoft.Win32.RegistryKey
+            regKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion")
+            strBuild1 = regKey.GetValue("CurrentMajorVersionNumber").ToString
+            strBuild2 = regKey.GetValue("CurrentMinorVersionNumber").ToString
+            strBuild3 = regKey.GetValue("CurrentBuild").ToString
+            strBuild4 = regKey.GetValue("UBR").ToString
+            regKey.Close()
+        Catch ex As Exception
+            Return Environment.OSVersion.Version
+            Exit Function
+        End Try
+        Return New Version(strBuild1, strBuild2, strBuild3, strBuild4)
+    End Function
     '初始化
     Private Sub MainWindow_Initialized() Handles MyBase.Initialized
-        ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark
-        Themeb.ToolTip = "当前颜色为深色模式"
-        Backgroundb.ToolTip = "当前背景为亚克力"
+        Dim exists As Boolean = False
+        Try
+            If My.Computer.Registry.CurrentUser.OpenSubKey("Software\CJH\LockTime\2.0\Settings") IsNot Nothing Then
+                exists = True
+            End If
+        Finally
+            My.Computer.Registry.CurrentUser.Close()
+        End Try
+        If exists = False Then
+            Try
+                Dim newKey As RegistryKey
+                newKey = My.Computer.Registry.CurrentUser.CreateSubKey("Software\CJH\LockTime\2.0\Settings")
+            Catch ex As Exception
+            End Try
+        End If
+
+        Dim keyValue As Object
+        keyValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "-1")
+        keyValue = keyValue.ToString.ToLower
+        If keyValue = "dark" Then
+            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark
+            Themeb.ToolTip = "当前颜色为深色模式"
+        ElseIf keyValue = "light" Then
+            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light
+            Themeb.ToolTip = "当前颜色为浅色模式"
+        Else
+            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light
+            Themeb.ToolTip = "当前颜色为浅色模式"
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light")
+            Catch ex As Exception
+            End Try
+        End If
+
+        Dim keyValue2 As Object
+        keyValue2 = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "-1")
+        keyValue2 = keyValue2.ToString.ToLower
+        If keyValue2 = "mica" Then
+            Backgroundb.ToolTip = "当前背景为云母"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Mica)
+        ElseIf keyValue2 = "acrylic" Then
+            Backgroundb.ToolTip = "当前背景为亚克力"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic)
+        ElseIf keyValue2 = "tabbed" Then
+            Backgroundb.ToolTip = "当前背景为Tabbed"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Tabbed)
+        ElseIf keyValue2 = "acrylic10" Then
+            Backgroundb.ToolTip = "当前背景为亚克力10"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic10)
+        ElseIf keyValue2 = "acrylic11" Then
+            Backgroundb.ToolTip = "当前背景为亚克力11"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic11)
+        ElseIf keyValue2 = "none" Then
+            Backgroundb.ToolTip = "当前没有背景效果"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.None)
+        Else
+            Dim OSVer As New Version(10, 0)
+            If GetOSVersion() <= OSVer Then
+                Backgroundb.ToolTip = "当前没有背景效果"
+                WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.None)
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "None")
+                Catch ex As Exception
+                End Try
+            Else
+                Backgroundb.ToolTip = "当前背景为亚克力"
+                WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic)
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic")
+                Catch ex As Exception
+                End Try
+            End If
+        End If
+
     End Sub
     Private Sub MainWindow_Loaded(sender As Object, e As System.Windows.RoutedEventArgs) Handles MyBase.Loaded
         'Me.Title = ""
@@ -68,8 +159,16 @@ Class MainWindow
                 Me.WindowStyle = WindowStyle.SingleBorderWindow
                 Me.WindowState = WindowState.Normal
                 Primitives.TitleBar.SetHeight(Me, 36)
-                Me.Left = (System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width) / 2
-                Me.Top = (System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Height - Me.Height) / 2
+                ' 获取当前窗体的 DPI
+                Dim dpiX = CInt(GetType(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic Or BindingFlags.Static).GetValue(Nothing, Nothing))
+                Dim dpiY = CInt(GetType(SystemParameters).GetProperty("Dpi", BindingFlags.NonPublic Or BindingFlags.Static).GetValue(Nothing, Nothing))
+                'If currentDpiX <> DefaultDPI OrElse currentDpiY <> DefaultDPI Then
+                '计算缩放比例
+                Dim scaleX As Single = dpiX / 96
+                Dim scaleY As Single = dpiY / 96
+                'WPF 位置默认已经乘了DPI，如果调整位置，要给DPI模拟后的位置（Me.Width已经默认模拟了DPI）
+                Me.Left = (System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width / scaleX - Me.Width) / 2
+                Me.Top = (System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Height / scaleY - Me.Height) / 2
                 Me.Windowb.Label = "全屏"
                 Me.Windowb.ToolTip = "全屏模式"
                 SetWin = 1
@@ -99,6 +198,10 @@ Class MainWindow
             Await Task.Delay(2000)
             If Themeb.Label = "浅色" Then
                 Themeb.Label = "颜色"
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light")
+                Catch ex As Exception
+                End Try
             End If
         Else
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark
@@ -107,6 +210,10 @@ Class MainWindow
             Await Task.Delay(2000)
             If Themeb.Label = "深色" Then
                 Themeb.Label = "颜色"
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Dark")
+                Catch ex As Exception
+                End Try
             End If
         End If
     End Sub
@@ -141,8 +248,16 @@ Class MainWindow
             Me.WindowState = WindowState.Normal
             Me.Windowb.Label = "全屏"
             Me.Windowb.ToolTip = "全屏模式"
-            Me.Left = (System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width - Me.Width) / 2
-            Me.Top = (System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Height - Me.Height) / 2
+            ' 获取当前窗体的 DPI
+            Dim dpiX = CInt(GetType(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic Or BindingFlags.Static).GetValue(Nothing, Nothing))
+            Dim dpiY = CInt(GetType(SystemParameters).GetProperty("Dpi", BindingFlags.NonPublic Or BindingFlags.Static).GetValue(Nothing, Nothing))
+            'If currentDpiX <> DefaultDPI OrElse currentDpiY <> DefaultDPI Then
+            '计算缩放比例
+            Dim scaleX As Single = dpiX / 96
+            Dim scaleY As Single = dpiY / 96
+            'WPF 位置默认已经乘了DPI，如果调整位置，要给DPI模拟后的位置（Me.Width已经默认模拟了DPI）
+            Me.Left = (System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Width / scaleX - Me.Width) / 2
+            Me.Top = (System.Windows.Forms.SystemInformation.PrimaryMonitorSize.Height / scaleY - Me.Height) / 2
             'Dim FontIcon1 = New FontIcon()
             'FontIcon1.FontFamily = New FontFamily("Segoe Fluent Icons")
             'FontIcon1.Glyph = "\xE740"
@@ -245,6 +360,10 @@ Class MainWindow
             Await Task.Delay(2000)
             If Backgroundb.Label = "云母" Then
                 Backgroundb.Label = "背景"
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Mica")
+                Catch ex As Exception
+                End Try
             End If
         ElseIf WindowHelper.GetSystemBackdropType(Me) = iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Mica Then
             WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic)
@@ -253,6 +372,10 @@ Class MainWindow
             Await Task.Delay(2000)
             If Backgroundb.Label = "亚克力" Then
                 Backgroundb.Label = "背景"
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic")
+                Catch ex As Exception
+                End Try
             End If
         ElseIf WindowHelper.GetSystemBackdropType(Me) = iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic Then
             WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Tabbed)
@@ -261,6 +384,10 @@ Class MainWindow
             Await Task.Delay(2000)
             If Backgroundb.Label = "Tabbed" Then
                 Backgroundb.Label = "背景"
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Tabbed")
+                Catch ex As Exception
+                End Try
             End If
         ElseIf WindowHelper.GetSystemBackdropType(Me) = iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Tabbed Then
             WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic10)
@@ -269,6 +396,10 @@ Class MainWindow
             Await Task.Delay(2000)
             If Backgroundb.Label = "亚克力10" Then
                 Backgroundb.Label = "背景"
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic10")
+                Catch ex As Exception
+                End Try
             End If
         ElseIf WindowHelper.GetSystemBackdropType(Me) = iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic10 Then
             WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic11)
@@ -277,6 +408,10 @@ Class MainWindow
             Await Task.Delay(2000)
             If Backgroundb.Label = "亚克力11" Then
                 Backgroundb.Label = "背景"
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic11")
+                Catch ex As Exception
+                End Try
             End If
         ElseIf WindowHelper.GetSystemBackdropType(Me) = iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic11 Then
             WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.None)
@@ -285,6 +420,10 @@ Class MainWindow
             Await Task.Delay(2000)
             If Backgroundb.Label = "无" Then
                 Backgroundb.Label = "背景"
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "None")
+                Catch ex As Exception
+                End Try
             End If
         End If
     End Sub

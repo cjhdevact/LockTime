@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:LockTime"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
-    StartupUri="MainWindow.xaml">
+    StartupUri="LockTimeWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
