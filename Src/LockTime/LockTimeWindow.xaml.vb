@@ -33,111 +33,40 @@ Imports iNKORE.UI.WPF.Modern.Controls.Helpers
 Imports System.Reflection
 Imports Microsoft.Win32
 
-Class MainWindow
-    Dim Timer1 As New DispatcherTimer
-    '获取系统版本函数
-    Function GetOSVersion() As Version
-        Dim strBuild1, strBuild2, strBuild3, strBuild4 As String
-        Try
-            Dim regKey As Microsoft.Win32.RegistryKey
-            regKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion")
-            strBuild1 = regKey.GetValue("CurrentMajorVersionNumber").ToString
-            strBuild2 = regKey.GetValue("CurrentMinorVersionNumber").ToString
-            strBuild3 = regKey.GetValue("CurrentBuild").ToString
-            strBuild4 = regKey.GetValue("UBR").ToString
-            regKey.Close()
-        Catch ex As Exception
-            Return Environment.OSVersion.Version
-            Exit Function
-        End Try
-        Return New Version(strBuild1, strBuild2, strBuild3, strBuild4)
-    End Function
+Class LockTimeWindow
+    Dim Timer1 As New DispatcherTimer '更新时间的定时器
+    Dim UpSettingTimer As New DispatcherTimer '定时更新设置定时器
+    'Public HideTextState As Integer
+    'Delegate Sub HideTextStateSub(ByVal TextState As Integer)
+
     '初始化
     Private Sub MainWindow_Initialized() Handles MyBase.Initialized
-        Dim exists As Boolean = False
-        Try
-            If My.Computer.Registry.CurrentUser.OpenSubKey("Software\CJH\LockTime\2.0\Settings") IsNot Nothing Then
-                exists = True
-            End If
-        Finally
-            My.Computer.Registry.CurrentUser.Close()
-        End Try
-        If exists = False Then
-            Try
-                Dim newKey As RegistryKey
-                newKey = My.Computer.Registry.CurrentUser.CreateSubKey("Software\CJH\LockTime\2.0\Settings")
-            Catch ex As Exception
-            End Try
-        End If
-
-        Dim keyValue As Object
-        keyValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "-1")
-        keyValue = keyValue.ToString.ToLower
-        If keyValue = "dark" Then
-            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark
-            Themeb.ToolTip = "当前颜色为深色模式"
-        ElseIf keyValue = "light" Then
-            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light
-            Themeb.ToolTip = "当前颜色为浅色模式"
-        Else
-            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light
-            Themeb.ToolTip = "当前颜色为浅色模式"
-            Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light")
-            Catch ex As Exception
-            End Try
-        End If
-
-        Dim keyValue2 As Object
-        keyValue2 = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "-1")
-        keyValue2 = keyValue2.ToString.ToLower
-        If keyValue2 = "mica" Then
-            Backgroundb.ToolTip = "当前背景为云母"
-            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Mica)
-        ElseIf keyValue2 = "acrylic" Then
-            Backgroundb.ToolTip = "当前背景为亚克力"
-            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic)
-        ElseIf keyValue2 = "tabbed" Then
-            Backgroundb.ToolTip = "当前背景为Tabbed"
-            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Tabbed)
-        ElseIf keyValue2 = "acrylic10" Then
-            Backgroundb.ToolTip = "当前背景为亚克力10"
-            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic10)
-        ElseIf keyValue2 = "acrylic11" Then
-            Backgroundb.ToolTip = "当前背景为亚克力11"
-            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic11)
-        ElseIf keyValue2 = "none" Then
-            Backgroundb.ToolTip = "当前没有背景效果"
-            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.None)
-        Else
-            Dim OSVer As New Version(10, 0)
-            If GetOSVersion() <= OSVer Then
-                Backgroundb.ToolTip = "当前没有背景效果"
-                WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.None)
-                Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "None")
-                Catch ex As Exception
-                End Try
-            Else
-                Backgroundb.ToolTip = "当前背景为亚克力"
-                WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic)
-                Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic")
-                Catch ex As Exception
-                End Try
-            End If
-        End If
-
+        ReadAppRegistry()
+        SetUIText()
     End Sub
+
+    '窗口初始化
     Private Sub MainWindow_Loaded(sender As Object, e As System.Windows.RoutedEventArgs) Handles MyBase.Loaded
+        My.Application.SettingsState = 0 '初始化更新设置定时器的判断值
         'Me.Title = ""
-        Me.WindowStartupLocation = WindowStartupLocation.CenterScreen
+        Me.WindowStartupLocation = WindowStartupLocation.CenterScreen '启动位置
 
-        Timer1.Interval = TimeSpan.FromMilliseconds(1000)
-        AddHandler Timer1.Tick, AddressOf Timer1_Tick
-        AddHandler MyBase.Closing, AddressOf MainWindow_Closing
+        Timer1.Interval = TimeSpan.FromMilliseconds(1000) '设置更新时间定时器间隔
+        AddHandler Timer1.Tick, AddressOf Timer1_Tick '关联更新时间定时器事件
+        UpSettingTimer.Interval = TimeSpan.FromMilliseconds(1000) '设置更新配置定时器间隔
+        AddHandler UpSettingTimer.Tick, AddressOf UpSettingTimer_Tick '关联更新配置定时器事件
+
+        AddHandler MyBase.Closing, AddressOf MainWindow_Closing '关联窗口关闭事件
+        '启动定时器
         Timer1.Start()
+        UpSettingTimer.Start()
 
+        AppStartCmds(sender, e)  '处理启动命令行
+    End Sub
+
+#Region "处理启动命令行"
+    '处理启动命令行
+    Sub AppStartCmds(sender As Object, e As System.Windows.RoutedEventArgs)
         'Dim e As System.Windows.RoutedEventArgs
         Dim CurCommand() As String
         Dim SetWin As Integer = 0
@@ -179,6 +108,232 @@ Class MainWindow
             Me.WindowState = WindowState.Maximized
         End If
     End Sub
+#End Region
+
+#Region "注册表读取"
+    '注册表读取
+    Sub ReadAppRegistry()
+        '初始化读取
+        Dim exists As Boolean = False
+        Try
+            If My.Computer.Registry.CurrentUser.OpenSubKey("Software\CJH\LockTime\2.0\Settings") IsNot Nothing Then
+                exists = True
+            End If
+        Finally
+            My.Computer.Registry.CurrentUser.Close()
+        End Try
+        If exists = False Then
+            Try
+                Dim newKey As RegistryKey
+                newKey = My.Computer.Registry.CurrentUser.CreateSubKey("Software\CJH\LockTime\2.0\Settings")
+            Catch ex As Exception
+            End Try
+        End If
+
+        '颜色模式
+        Dim keyValue As Object
+        keyValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "-1")
+        keyValue = keyValue.ToString.ToLower
+        If keyValue = "dark" Then
+            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark
+            Themeb.ToolTip = "当前颜色为深色模式"
+        ElseIf keyValue = "light" Then
+            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light
+            Themeb.ToolTip = "当前颜色为浅色模式"
+        Else
+            ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light
+            Themeb.ToolTip = "当前颜色为浅色模式"
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light")
+            Catch ex As Exception
+            End Try
+        End If
+
+        '背景
+        Dim keyValue2 As Object
+        keyValue2 = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "-1")
+        keyValue2 = keyValue2.ToString.ToLower
+        If keyValue2 = "mica" Then
+            Backgroundb.ToolTip = "当前背景为云母"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Mica)
+        ElseIf keyValue2 = "acrylic" Then
+            Backgroundb.ToolTip = "当前背景为亚克力"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic)
+        ElseIf keyValue2 = "tabbed" Then
+            Backgroundb.ToolTip = "当前背景为Tabbed"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Tabbed)
+        ElseIf keyValue2 = "acrylic10" Then
+            Backgroundb.ToolTip = "当前背景为亚克力10"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic10)
+        ElseIf keyValue2 = "acrylic11" Then
+            Backgroundb.ToolTip = "当前背景为亚克力11"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic11)
+        ElseIf keyValue2 = "none" Then
+            Backgroundb.ToolTip = "当前没有背景效果"
+            WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.None)
+        Else
+            Dim OSVer As New Version(10, 0)
+            If GetOSVersion() <= OSVer Then
+                Backgroundb.ToolTip = "当前没有背景效果"
+                WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.None)
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "None")
+                Catch ex As Exception
+                End Try
+            Else
+                Backgroundb.ToolTip = "当前背景为亚克力"
+                WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic)
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic")
+                Catch ex As Exception
+                End Try
+            End If
+        End If
+
+        '是否隐藏工具栏文字
+        My.Application.HideTextState = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", -1)
+        If My.Application.HideTextState = -1 Then
+            My.Application.HideTextState = 0
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 0)
+            Catch ex As Exception
+            End Try
+        ElseIf My.Application.HideTextState > 1 Then
+            My.Application.HideTextState = 0
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 0)
+            Catch ex As Exception
+            End Try
+        End If
+
+        '时间字体大小
+        My.Application.TimeFontSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontSize", -1)
+        If My.Application.TimeFontSize < 1 Then
+            My.Application.TimeFontSize = timelabel.FontSize
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontSize", timelabel.FontSize)
+            Catch ex As Exception
+            End Try
+        End If
+        Me.timelabel.FontSize = My.Application.TimeFontSize
+
+        '时间字体名称
+        My.Application.TimeFontName = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontName", Chr(10))
+        If My.Application.TimeFontName = Chr(10) Then
+            My.Application.TimeFontName = timelabel.FontFamily.Source
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontName", timelabel.FontFamily.Source)
+            Catch ex As Exception
+            End Try
+        End If
+        Me.timelabel.FontFamily = New System.Windows.Media.FontFamily(My.Application.TimeFontName)
+
+        '日期字体大小
+        My.Application.DateFontSize = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontSize", -1)
+        If My.Application.DateFontSize < 1 Then
+            My.Application.DateFontSize = datelabel.FontSize
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontSize", datelabel.FontSize)
+            Catch ex As Exception
+            End Try
+        End If
+        Me.datelabel.FontSize = My.Application.DateFontSize
+
+        '日期字体名称
+        My.Application.DateFontName = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontName", Chr(10))
+        If My.Application.DateFontName = Chr(10) Then
+            My.Application.DateFontName = datelabel.FontFamily.Source
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontName", datelabel.FontFamily.Source)
+            Catch ex As Exception
+            End Try
+        End If
+        Me.datelabel.FontFamily = New System.Windows.Media.FontFamily(My.Application.DateFontName)
+
+    End Sub
+#End Region
+
+#Region "动态设置函数"
+    '设置工具栏文字UI
+    Public Sub SetUIText()
+        If My.Application.HideTextState = 1 Then '隐藏文字
+            'Exitb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Settingb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Aboutb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Themeb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Backgroundb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Windowb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Centerb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Topb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Bottomb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Leftb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'Rightb.LabelPosition = CommandBarLabelPosition.Collapsed
+            Exitb.Label = ""
+            Settingb.Label = ""
+            Aboutb.Label = ""
+            Themeb.Label = ""
+            Backgroundb.Label = ""
+            Windowb.Label = ""
+            Centerb.Label = ""
+            Topb.Label = ""
+            Bottomb.Label = ""
+            Leftb.Label = ""
+            Rightb.Label = ""
+        Else '显示文字
+            'Exitb.LabelPosition = CommandBarLabelPosition.Default
+            'Settingb.LabelPosition = CommandBarLabelPosition.Default
+            'Aboutb.LabelPosition = CommandBarLabelPosition.Default
+            'Themeb.LabelPosition = CommandBarLabelPosition.Default
+            'Backgroundb.LabelPosition = CommandBarLabelPosition.Default
+            'Windowb.LabelPosition = CommandBarLabelPosition.Default
+            'Centerb.LabelPosition = CommandBarLabelPosition.Default
+            'Topb.LabelPosition = CommandBarLabelPosition.Default
+            'Bottomb.LabelPosition = CommandBarLabelPosition.Default
+            'Leftb.LabelPosition = CommandBarLabelPosition.Default
+            'Rightb.LabelPosition = CommandBarLabelPosition.Default
+            Exitb.Label = "退出"
+            Settingb.Label = "设置"
+            Aboutb.Label = "关于"
+            Themeb.Label = "颜色"
+            Backgroundb.Label = "背景"
+            If Me.WindowState = WindowState.Maximized Then
+                Windowb.Label = "窗口"
+            Else
+                Windowb.Label = "全屏"
+            End If
+            Centerb.Label = "居中"
+            Topb.Label = "顶部"
+            Bottomb.Label = "底部"
+            Leftb.Label = "左侧"
+            Rightb.Label = "右侧"
+        End If
+    End Sub
+    '设置字体
+    Sub SetUIFont()
+        Me.timelabel.FontFamily = New System.Windows.Media.FontFamily(My.Application.TimeFontName)
+        Me.timelabel.FontSize = My.Application.TimeFontSize
+        Me.datelabel.FontSize = My.Application.DateFontSize
+        Me.datelabel.FontFamily = New System.Windows.Media.FontFamily(My.Application.DateFontName)
+    End Sub
+#End Region
+
+    '获取系统版本函数
+    Function GetOSVersion() As Version
+        Dim strBuild1, strBuild2, strBuild3, strBuild4 As String
+        Try '尝试读取HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion，因为.Net内置的版本函数在Win10以上使用会获取到错误的版本
+            Dim regKey As Microsoft.Win32.RegistryKey
+            regKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion")
+            strBuild1 = regKey.GetValue("CurrentMajorVersionNumber").ToString
+            strBuild2 = regKey.GetValue("CurrentMinorVersionNumber").ToString
+            strBuild3 = regKey.GetValue("CurrentBuild").ToString
+            strBuild4 = regKey.GetValue("UBR").ToString
+            regKey.Close()
+        Catch ex As Exception
+            Return Environment.OSVersion.Version '如果读取注册表出错就返回.Net内置的版本函数获取到的版本号
+            Exit Function
+        End Try
+        Return New Version(strBuild1, strBuild2, strBuild3, strBuild4) '返回读取的系统版本
+    End Function
     '定时器获取时间
     Private Sub Timer1_Tick()
         timelabel.Text = Format(Now, "HH:mm:ss")
@@ -189,6 +344,19 @@ Class MainWindow
         End If
         a = Nothing
     End Sub
+    '定时器更新设置
+    Private Sub UpSettingTimer_Tick()
+        If My.Application.SettingsState = 1 Then
+            My.Application.SettingsState = 0
+            SetUIText()
+            SetUIFont()
+            'If HideTextState = 1 Then
+            '    Me.Dispatcher.Invoke(New HideTextStateSub(AddressOf SetUIText), 0)
+            'Else
+            '    Me.Dispatcher.Invoke(New HideTextStateSub(AddressOf SetUIText), 1)
+            'End If
+        End If
+    End Sub
     '主题
     Private Async Sub Themeb_Click(sender As Object, e As RoutedEventArgs)
         If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark Then
@@ -197,7 +365,11 @@ Class MainWindow
             Themeb.ToolTip = "当前颜色为浅色模式"
             Await Task.Delay(2000)
             If Themeb.Label = "浅色" Then
-                Themeb.Label = "颜色"
+                If My.Application.HideTextState = 0 Then
+                    Themeb.Label = "颜色"
+                Else
+                    Themeb.Label = ""
+                End If
                 Try
                     My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light")
                 Catch ex As Exception
@@ -209,13 +381,27 @@ Class MainWindow
             Themeb.ToolTip = "当前颜色为深色模式"
             Await Task.Delay(2000)
             If Themeb.Label = "深色" Then
-                Themeb.Label = "颜色"
+                If My.Application.HideTextState = 0 Then
+                    Themeb.Label = "颜色"
+                Else
+                    Themeb.Label = ""
+                End If
                 Try
                     My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Dark")
                 Catch ex As Exception
                 End Try
             End If
         End If
+    End Sub
+    '设置
+    Private Sub Settingb_Click(sender As Object, e As RoutedEventArgs)
+        Dim SettingWindow As New LockTimeSettingWindow
+        SettingWindow.Owner = Me
+        SettingWindow.ShowDialog()
+        'Await Task.Run(Sub()
+        '                   Dim SettingWindow As New LockTimeSettingWindow
+        '                   SettingWindow.ShowDialog()
+        '               End Sub)
     End Sub
     '退出
     Private Sub Exitb_Click(sender As Object, e As RoutedEventArgs)
@@ -246,7 +432,12 @@ Class MainWindow
             Primitives.TitleBar.SetHeight(Me, 36)
             Me.WindowStyle = WindowStyle.SingleBorderWindow
             Me.WindowState = WindowState.Normal
-            Me.Windowb.Label = "全屏"
+            If My.Application.HideTextState = 0 Then
+                Me.Windowb.Label = "全屏"
+            Else
+                Me.Windowb.Label = ""
+            End If
+
             Me.Windowb.ToolTip = "全屏模式"
             ' 获取当前窗体的 DPI
             Dim dpiX = CInt(GetType(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic Or BindingFlags.Static).GetValue(Nothing, Nothing))
@@ -266,7 +457,11 @@ Class MainWindow
             Primitives.TitleBar.SetHeight(Me, 0)
             Me.WindowStyle = WindowStyle.None
             Me.WindowState = WindowState.Maximized
-            Me.Windowb.Label = "窗口"
+            If My.Application.HideTextState = 0 Then
+                Me.Windowb.Label = "窗口"
+            Else
+                Me.Windowb.Label = ""
+            End If
             Me.Windowb.ToolTip = "窗口模式"
             Me.Left = 0
             Me.Top = 0
@@ -284,7 +479,7 @@ Class MainWindow
         'dialog.SecondaryButtonText = "Don't Save"
         'dialog.CloseButtonText = "取消"
         dialog.DefaultButton = ContentDialogButton.Primary
-        dialog.Content = New AboutPage
+        dialog.Content = New LockTimeAboutPage
         'dialog.Content = "这将会退出时钟锁屏"
         Await dialog.ShowAsync()
     End Sub
@@ -359,7 +554,11 @@ Class MainWindow
             Backgroundb.ToolTip = "当前背景效果为云母"
             Await Task.Delay(2000)
             If Backgroundb.Label = "云母" Then
-                Backgroundb.Label = "背景"
+                If My.Application.HideTextState = 0 Then
+                    Backgroundb.Label = "背景"
+                Else
+                    Backgroundb.Label = ""
+                End If
                 Try
                     My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Mica")
                 Catch ex As Exception
@@ -371,7 +570,11 @@ Class MainWindow
             Backgroundb.ToolTip = "当前背景效果为亚克力"
             Await Task.Delay(2000)
             If Backgroundb.Label = "亚克力" Then
-                Backgroundb.Label = "背景"
+                If My.Application.HideTextState = 0 Then
+                    Backgroundb.Label = "背景"
+                Else
+                    Backgroundb.Label = ""
+                End If
                 Try
                     My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic")
                 Catch ex As Exception
@@ -383,7 +586,11 @@ Class MainWindow
             Backgroundb.ToolTip = "当前背景效果为Tabbed"
             Await Task.Delay(2000)
             If Backgroundb.Label = "Tabbed" Then
-                Backgroundb.Label = "背景"
+                If My.Application.HideTextState = 0 Then
+                    Backgroundb.Label = "背景"
+                Else
+                    Backgroundb.Label = ""
+                End If
                 Try
                     My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Tabbed")
                 Catch ex As Exception
@@ -395,7 +602,11 @@ Class MainWindow
             Backgroundb.ToolTip = "当前背景效果为亚克力10"
             Await Task.Delay(2000)
             If Backgroundb.Label = "亚克力10" Then
-                Backgroundb.Label = "背景"
+                If My.Application.HideTextState = 0 Then
+                    Backgroundb.Label = "背景"
+                Else
+                    Backgroundb.Label = ""
+                End If
                 Try
                     My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic10")
                 Catch ex As Exception
@@ -407,7 +618,11 @@ Class MainWindow
             Backgroundb.ToolTip = "当前背景效果为亚克力11"
             Await Task.Delay(2000)
             If Backgroundb.Label = "亚克力11" Then
-                Backgroundb.Label = "背景"
+                If My.Application.HideTextState = 0 Then
+                    Backgroundb.Label = "背景"
+                Else
+                    Backgroundb.Label = ""
+                End If
                 Try
                     My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic11")
                 Catch ex As Exception
@@ -419,7 +634,11 @@ Class MainWindow
             Backgroundb.ToolTip = "当前没有背景效果"
             Await Task.Delay(2000)
             If Backgroundb.Label = "无" Then
-                Backgroundb.Label = "背景"
+                If My.Application.HideTextState = 0 Then
+                    Backgroundb.Label = "背景"
+                Else
+                    Backgroundb.Label = ""
+                End If
                 Try
                     My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "None")
                 Catch ex As Exception
@@ -427,6 +646,7 @@ Class MainWindow
             End If
         End If
     End Sub
+
     'Private Sub timelabel_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles timelabel.MouseUp
     '    If CommandBar1.Visibility = Visibility.Hidden Then
     '        CommandBar1.Visibility = Visibility.Visible

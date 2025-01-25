@@ -1,0 +1,70 @@
+﻿<Page x:Class="LockTimeThemePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+      xmlns:local="clr-namespace:LockTime"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="LockTimeThemePage" Loaded="Page_Loaded">
+    <ScrollViewer Padding="20,0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <ui:SettingsCard Grid.Row="0" Description="控制是否隐藏屏保右下角的工具栏文字" Margin="0,5,0,5" Header="隐藏工具栏文字" IsEnabled="True">
+            <ui:SettingsCard.HeaderIcon>
+                <ui:FontIcon Glyph="&#xf683;"/>
+            </ui:SettingsCard.HeaderIcon>
+            <ui:ToggleSwitch x:Name="HideTextToggleSwitch" />
+        </ui:SettingsCard>
+        
+        <ui:SettingsExpander Grid.Row="1" Grid.RowSpan="3" x:Name="TimeFontSettingsCard1" Description="" Header="时间字体" IsEnabled="True">
+            <ui:SettingsExpander.HeaderIcon>
+                <ui:FontIcon Glyph="&#xe8d2;"/>
+            </ui:SettingsExpander.HeaderIcon>
+            <ui:SettingsExpander.Items>
+                <ui:SettingsCard Description="" Header="字体系列" IsEnabled="True">
+                    <ComboBox x:Name="TimeFontNameComboBox" SelectedIndex="0">
+                    </ComboBox>
+                </ui:SettingsCard>
+                <ui:SettingsCard Description="" Header="大小" IsEnabled="True">
+                    <ComboBox x:Name="TimeFontSizeComboBox" SelectedIndex="0" IsEditable="True">
+                    </ComboBox>
+                </ui:SettingsCard>
+                <ui:SettingsCard ContentAlignment="Left">
+                    <Label x:Name="TimeFontStylePreview" Content="1234567890" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                </ui:SettingsCard>
+            </ui:SettingsExpander.Items>
+        </ui:SettingsExpander>
+
+        <ui:SettingsExpander Grid.Row="4" Grid.RowSpan="3"  x:Name="DateFontSettingsCard1" Description="" Header="日期字体" IsEnabled="True">
+            <ui:SettingsExpander.HeaderIcon>
+                <ui:FontIcon Glyph="&#xe8d2;"/>
+            </ui:SettingsExpander.HeaderIcon>
+            <ui:SettingsExpander.Items>
+                <ui:SettingsCard Description="" Header="字体系列" IsEnabled="True">
+                    <ComboBox x:Name="DateFontNameComboBox" SelectedIndex="0">
+                    </ComboBox>
+                </ui:SettingsCard>
+                <ui:SettingsCard Description="" Header="大小" IsEnabled="True">
+                    <ComboBox x:Name="DateFontSizeComboBox" SelectedIndex="0" IsEditable="True">
+                    </ComboBox>
+                </ui:SettingsCard>
+                <ui:SettingsCard ContentAlignment="Left">
+                    <Label x:Name="DateFontStylePreview" Content="The quick brown fox jump over the lazy dog.&#13;&#10;一只敏捷的棕色狐狸跳过一只懒惰的狗" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                </ui:SettingsCard>
+            </ui:SettingsExpander.Items>
+        </ui:SettingsExpander>
+    </Grid>
+   </ScrollViewer>
+</Page>

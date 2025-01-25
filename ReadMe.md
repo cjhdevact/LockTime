@@ -2,14 +2,6 @@
   LockTime - 时钟锁屏
 </h1>
 
-<p align="center">
-  <a href="https://github.com/cjhdevact/LockTime/releases/latest"><img src="https://img.shields.io/github/downloads/cjhdevact/LockTime/total?color=%239F7AEA" alt="下载发行版"></a>
-  <a href="https://github.com/cjhdevact/LockTime/issues"><img src="https://img.shields.io/github/issues/cjhdevact/LockTime?color=f76642" alt="Issues"></a>
-  <a href="https://github.com/cjhdevact/LockTime/releases/latest"><img src="https://img.shields.io/github/v/release/cjhdevact/LockTime?color=%4CF4A8B4" alt="下载"></a>
-  <a href="#"><img src="https://img.shields.io/github/release-date/cjhdevact/LockTime?color=%23b0a3e8" alt="发布日期"></a>
-  <a href="https://github.com/cjhdevact/LockTime/commits/"><img src="https://img.shields.io/github/commit-activity/m/cjhdevact/LockTime" alt="提交记录"></a>
-</p>
-
 ## 📝关于本项目
 
 一个具有深/浅色主题，云母/亚克力背景（需要系统支持），Fluent UI 2界面的时钟锁屏（屏保），支持 Windows 7 及以上版本系统，可以作为屏保使用，也可以自习时在教学白板上使用。
@@ -38,12 +30,14 @@
 ```
 Name: CJH Root Certificate
 Create: ‎2024‎年‎12‎月‎27‎日 20:42:16
-Expires: ‎2150‎年‎12‎月‎31‎日 0:00:003e5
+Expires: ‎2150‎年‎12‎月‎31‎日 0:00:00
+SHA256: d2d67c8ebea3cc954c7ee0e94f5f45537dde7709053ca9e89f352fda602833e5
+SHA1: 73b80a8d0ba3f662b575f2fc0b78612469e22e59
 MD5: 0bc507db70947e57ddd81bec63b581d9
-SHA256: d2d67c8ebea3cc954c7ee0e94f5f45537dde7709053ca9e89f352fda60283
-Key fingerprint (SHA1): 73b80a8d0ba3f662b575f2fc0b78612469e22e59
+Key Number: dbde77418068d5a34b2064626a12ecde
 KeyID: d929e453f645017190dac5001a736a4d
 Certificate SerialNumber: dbde77418068d5a34b2064626a12ecde
+Key fingerprint: 73b80a8d0ba3f662b575f2fc0b78612469e22e59
 Key Type: md5RSA
 ```
 

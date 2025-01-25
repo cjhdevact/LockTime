@@ -24,7 +24,7 @@
 '*     About Page.                                     *
 '*                                                     *
 '\*****************************************************/
-Public Class AboutPage
+Public Class LockTimeAboutPage
     '初始化
     Private Sub AboutPage_Load() Handles MyBase.Initialized
         ver.Content = "时钟锁屏 版本：" & My.Application.Info.Version.ToString & vbCrLf &

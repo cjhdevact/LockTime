@@ -1,0 +1,9 @@
+/Src/.vs/
+
+/Src/*.suo
+
+/Src/LockTime/bin/
+
+/Src/LockTime/obj/
+
+/Src/packages/
