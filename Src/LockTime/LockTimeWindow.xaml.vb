@@ -250,6 +250,135 @@ Class LockTimeWindow
         End If
         Me.datelabel.FontFamily = New System.Windows.Media.FontFamily(My.Application.DateFontName)
 
+        '时间格式
+        My.Application.TimeFormat = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", Chr(10))
+        If My.Application.TimeFormat = Chr(10) Or My.Application.TimeFormat = "" Then
+            My.Application.TimeFormat = "HH:mm:ss"
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat)
+            Catch ex As Exception
+            End Try
+        End If
+
+        '日期格式
+        My.Application.DateFormat = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", Chr(10))
+        If My.Application.DateFormat = Chr(10) Or My.Application.DateFormat = "" Then
+            My.Application.DateFormat = "yyyy年 M月 d日"
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat)
+            Catch ex As Exception
+            End Try
+        End If
+
+        '时间颜色
+        Dim TimeColorR As Integer
+        Dim TimeColorG As Integer
+        Dim TimeColorB As Integer
+        TimeColorR = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", -1)
+        If TimeColorR = -1 Or My.Application.DateFontSize > 255 Then
+            If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
+                TimeColorR = 0
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 0)
+                Catch ex As Exception
+                End Try
+            Else
+                TimeColorR = 255
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 255)
+                Catch ex As Exception
+                End Try
+            End If
+        End If
+        TimeColorG = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", -1)
+        If TimeColorG = -1 Or My.Application.DateFontSize > 255 Then
+            If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
+                TimeColorG = 0
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 0)
+                Catch ex As Exception
+                End Try
+            Else
+                TimeColorG = 255
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 255)
+                Catch ex As Exception
+                End Try
+            End If
+        End If
+        TimeColorB = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", -1)
+        If TimeColorB = -1 Or My.Application.DateFontSize > 255 Then
+            If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
+                TimeColorB = 0
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 0)
+                Catch ex As Exception
+                End Try
+            Else
+                TimeColorB = 255
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 255)
+                Catch ex As Exception
+                End Try
+            End If
+        End If
+        My.Application.TimeColor = Color.FromArgb(TimeColorR, TimeColorG, TimeColorB)
+        Me.timelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(My.Application.TimeColor.R, My.Application.TimeColor.G, My.Application.TimeColor.B))
+
+        '日期颜色
+        Dim DateColorR As Integer
+        Dim DateColorG As Integer
+        Dim DateColorB As Integer
+        DateColorR = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", -1)
+        If DateColorR = -1 Or My.Application.DateFontSize > 255 Then
+            If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
+                DateColorR = 0
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 0)
+                Catch ex As Exception
+                End Try
+            Else
+                DateColorR = 255
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 255)
+                Catch ex As Exception
+                End Try
+            End If
+        End If
+        DateColorG = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", -1)
+        If DateColorG = -1 Or My.Application.DateFontSize > 255 Then
+            If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
+                DateColorG = 0
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 0)
+                Catch ex As Exception
+                End Try
+            Else
+                DateColorG = 255
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 255)
+                Catch ex As Exception
+                End Try
+            End If
+        End If
+        DateColorB = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", -1)
+        If DateColorB = -1 Or My.Application.DateFontSize > 255 Then
+            If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
+                DateColorB = 0
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 0)
+                Catch ex As Exception
+                End Try
+            Else
+                DateColorB = 255
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 255)
+                Catch ex As Exception
+                End Try
+            End If
+        End If
+        My.Application.DateColor = Color.FromArgb(DateColorR, DateColorG, DateColorB)
+        Me.datelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(My.Application.DateColor.R, My.Application.DateColor.G, My.Application.DateColor.B))
     End Sub
 #End Region
 
@@ -315,6 +444,12 @@ Class LockTimeWindow
         Me.datelabel.FontSize = My.Application.DateFontSize
         Me.datelabel.FontFamily = New System.Windows.Media.FontFamily(My.Application.DateFontName)
     End Sub
+
+    '更新显示颜色
+    Sub SetUIColor()
+        Me.timelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(My.Application.TimeColor.R, My.Application.TimeColor.G, My.Application.TimeColor.B))
+        Me.datelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(My.Application.DateColor.R, My.Application.DateColor.G, My.Application.DateColor.B))
+    End Sub
 #End Region
 
     '获取系统版本函数
@@ -336,13 +471,36 @@ Class LockTimeWindow
     End Function
     '定时器获取时间
     Private Sub Timer1_Tick()
-        timelabel.Text = Format(Now, "HH:mm:ss")
-        Dim a As String
-        a = Format(Now, "yyyy年 M月 d日")
+        Dim aa As String = ""
+        Try
+            aa = Format(Now, My.Application.TimeFormat)
+        Catch ex As Exception
+            aa = Format(Now, "HH:mm:ss")
+            My.Application.TimeFormat = "HH:mm:ss"
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat)
+            Catch eex As Exception
+            End Try
+            MessageBox.Show("格式化时间失败，已重置默认时间格式。", "错误", MessageBoxButton.OK, MessageBoxImage.Error)
+        End Try
+        timelabel.Text = aa
+        Dim a As String = ""
+        Try
+            a = Format(Now, My.Application.DateFormat)
+        Catch ex As Exception
+            a = Format(Now, "yyyy年 M月 d日")
+            My.Application.DateFormat = "yyyy年 M月 d日"
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat)
+            Catch eex As Exception
+            End Try
+            MessageBox.Show("格式化日期失败，已重置默认日期格式。", "错误", MessageBoxButton.OK, MessageBoxImage.Error)
+        End Try
         If a <> datelabel.Text Then
             datelabel.Text = a
         End If
         a = Nothing
+        aa = Nothing
     End Sub
     '定时器更新设置
     Private Sub UpSettingTimer_Tick()
@@ -350,6 +508,7 @@ Class LockTimeWindow
             My.Application.SettingsState = 0
             SetUIText()
             SetUIFont()
+            SetUIColor()
             'If HideTextState = 1 Then
             '    Me.Dispatcher.Invoke(New HideTextStateSub(AddressOf SetUIText), 0)
             'Else
@@ -363,6 +522,38 @@ Class LockTimeWindow
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light
             Themeb.Label = "浅色"
             Themeb.ToolTip = "当前颜色为浅色模式"
+            If CType(timelabel.Foreground, SolidColorBrush).Color = System.Windows.Media.Color.FromRgb(255, 255, 255) Then
+                timelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0))
+                My.Application.TimeColor = System.Drawing.Color.FromArgb(0, 0, 0)
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 0)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 0)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 0)
+                Catch ex As Exception
+                End Try
+            End If
+            If CType(datelabel.Foreground, SolidColorBrush).Color = System.Windows.Media.Color.FromRgb(255, 255, 255) Then
+                datelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0))
+                My.Application.DateColor = System.Drawing.Color.FromArgb(0, 0, 0)
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 0)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 0)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 0)
+                Catch ex As Exception
+                End Try
+            End If
             Await Task.Delay(2000)
             If Themeb.Label = "浅色" Then
                 If My.Application.HideTextState = 0 Then
@@ -371,14 +562,47 @@ Class LockTimeWindow
                     Themeb.Label = ""
                 End If
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light")
-                Catch ex As Exception
-                End Try
-            End If
-        Else
+                        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light")
+                    Catch ex As Exception
+                    End Try
+                End If
+            Else
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark
             Themeb.Label = "深色"
             Themeb.ToolTip = "当前颜色为深色模式"
+            If CType(timelabel.Foreground, SolidColorBrush).Color = System.Windows.Media.Color.FromRgb(0, 0, 0) Then
+                timelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255))
+                My.Application.TimeColor = System.Drawing.Color.FromArgb(255, 255, 255)
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 255)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 255)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 255)
+                Catch ex As Exception
+                End Try
+            End If
+            If CType(datelabel.Foreground, SolidColorBrush).Color = System.Windows.Media.Color.FromRgb(0, 0, 0) Then
+                datelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255))
+                My.Application.DateColor = System.Drawing.Color.FromArgb(255, 255, 255)
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 255)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 255)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 255)
+                Catch ex As Exception
+                End Try
+            End If
+
             Await Task.Delay(2000)
             If Themeb.Label = "深色" Then
                 If My.Application.HideTextState = 0 Then

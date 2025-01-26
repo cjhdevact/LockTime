@@ -56,7 +56,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>appicon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\appicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -105,6 +105,9 @@
     <Compile Include="LockTimeSettingWindow.xaml.vb">
       <DependentUpon>LockTimeSettingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LockTimeFormatHelpPage.xaml.vb">
+      <DependentUpon>LockTimeFormatHelpPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="LockTimeAboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -136,6 +139,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="LockTimeSettingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LockTimeFormatHelpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -193,7 +200,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="appicon.ico" />
+    <Resource Include="Resources\appicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimeFormat.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

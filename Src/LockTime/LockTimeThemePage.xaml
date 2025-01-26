@@ -8,27 +8,38 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="LockTimeThemePage" Loaded="Page_Loaded">
-    <ScrollViewer Padding="20,0">
+    <ScrollViewer Padding="20,0" VerticalScrollBarVisibility="Auto">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
             
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <ui:SettingsCard Grid.Row="0" Description="控制是否隐藏屏保右下角的工具栏文字" Margin="0,5,0,5" Header="隐藏工具栏文字" IsEnabled="True">
-            <ui:SettingsCard.HeaderIcon>
-                <ui:FontIcon Glyph="&#xf683;"/>
-            </ui:SettingsCard.HeaderIcon>
-            <ui:ToggleSwitch x:Name="HideTextToggleSwitch" />
-        </ui:SettingsCard>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
         
-        <ui:SettingsExpander Grid.Row="1" Grid.RowSpan="3" x:Name="TimeFontSettingsCard1" Description="" Header="时间字体" IsEnabled="True">
+            <ui:SettingsCard Grid.Row="0" Description="控制是否隐藏屏保右下角的工具栏文字" Margin="0,0,0,4" Header="隐藏工具栏文字" IsEnabled="True">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xf683;"/>
+                </ui:SettingsCard.HeaderIcon>
+                <ui:ToggleSwitch x:Name="HideTextToggleSwitch" />
+            </ui:SettingsCard>
+        
+            <ui:SettingsExpander Grid.Row="1" Grid.RowSpan="4" x:Name="TimeFontSettingsCard"  Margin="0,0,0,4" Description="" Header="时间字体" IsEnabled="True">
             <ui:SettingsExpander.HeaderIcon>
                 <ui:FontIcon Glyph="&#xe8d2;"/>
             </ui:SettingsExpander.HeaderIcon>
@@ -38,33 +49,129 @@
                     </ComboBox>
                 </ui:SettingsCard>
                 <ui:SettingsCard Description="" Header="大小" IsEnabled="True">
-                    <ComboBox x:Name="TimeFontSizeComboBox" SelectedIndex="0" IsEditable="True">
-                    </ComboBox>
-                </ui:SettingsCard>
-                <ui:SettingsCard ContentAlignment="Left">
-                    <Label x:Name="TimeFontStylePreview" Content="1234567890" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
-                </ui:SettingsCard>
-            </ui:SettingsExpander.Items>
-        </ui:SettingsExpander>
-
-        <ui:SettingsExpander Grid.Row="4" Grid.RowSpan="3"  x:Name="DateFontSettingsCard1" Description="" Header="日期字体" IsEnabled="True">
+                        <ComboBox x:Name="TimeFontSizeComboBox" SelectedIndex="0" IsEditable="True">
+                            <ComboBoxItem>8</ComboBoxItem>
+                            <ComboBoxItem>9</ComboBoxItem>
+                            <ComboBoxItem>10</ComboBoxItem>
+                            <ComboBoxItem>11</ComboBoxItem>
+                            <ComboBoxItem>12</ComboBoxItem>
+                            <ComboBoxItem>14</ComboBoxItem>
+                            <ComboBoxItem>16</ComboBoxItem>
+                            <ComboBoxItem>18</ComboBoxItem>
+                            <ComboBoxItem>20</ComboBoxItem>
+                            <ComboBoxItem>22</ComboBoxItem>
+                            <ComboBoxItem>24</ComboBoxItem>
+                            <ComboBoxItem>26</ComboBoxItem>
+                            <ComboBoxItem>28</ComboBoxItem>
+                            <ComboBoxItem>36</ComboBoxItem>
+                            <ComboBoxItem>48</ComboBoxItem>
+                            <ComboBoxItem>72</ComboBoxItem>
+                            <ComboBoxItem>84</ComboBoxItem>
+                            <ComboBoxItem>96</ComboBoxItem>
+                            <ComboBoxItem>100</ComboBoxItem>
+                            <ComboBoxItem>200</ComboBoxItem>
+                        </ComboBox>
+                    </ui:SettingsCard>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <ScrollViewer Padding="20,0" VerticalScrollBarVisibility="Auto">
+                            <TextBlock x:Name="TimeFontStylePreview" Text="1234567890" HorizontalAlignment="Center" TextAlignment="Center" />
+                        </ScrollViewer>
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Description="" Header="" IsEnabled="True">
+                        <Button x:Name="ResetTimeFormatButton" Content="重置" Margin="4,0,0,0" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+        
+            <ui:SettingsExpander Grid.Row="5" Grid.RowSpan="4"  x:Name="DateFontSettingsCard"  Margin="0,0,0,4" Description="" Header="日期字体" IsEnabled="True">
             <ui:SettingsExpander.HeaderIcon>
                 <ui:FontIcon Glyph="&#xe8d2;"/>
             </ui:SettingsExpander.HeaderIcon>
-            <ui:SettingsExpander.Items>
-                <ui:SettingsCard Description="" Header="字体系列" IsEnabled="True">
-                    <ComboBox x:Name="DateFontNameComboBox" SelectedIndex="0">
-                    </ComboBox>
-                </ui:SettingsCard>
-                <ui:SettingsCard Description="" Header="大小" IsEnabled="True">
-                    <ComboBox x:Name="DateFontSizeComboBox" SelectedIndex="0" IsEditable="True">
-                    </ComboBox>
-                </ui:SettingsCard>
-                <ui:SettingsCard ContentAlignment="Left">
-                    <Label x:Name="DateFontStylePreview" Content="The quick brown fox jump over the lazy dog.&#13;&#10;一只敏捷的棕色狐狸跳过一只懒惰的狗" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
-                </ui:SettingsCard>
-            </ui:SettingsExpander.Items>
-        </ui:SettingsExpander>
-    </Grid>
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="" Header="字体系列" IsEnabled="True">
+                        <ComboBox x:Name="DateFontNameComboBox" SelectedIndex="0">
+                        </ComboBox>
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Description="" Header="大小" IsEnabled="True">
+                        <ComboBox x:Name="DateFontSizeComboBox" SelectedIndex="0" IsEditable="True">
+                            <ComboBoxItem>8</ComboBoxItem>
+                            <ComboBoxItem>9</ComboBoxItem>
+                            <ComboBoxItem>10</ComboBoxItem>
+                            <ComboBoxItem>11</ComboBoxItem>
+                            <ComboBoxItem>12</ComboBoxItem>
+                            <ComboBoxItem>14</ComboBoxItem>
+                            <ComboBoxItem>16</ComboBoxItem>
+                            <ComboBoxItem>18</ComboBoxItem>
+                            <ComboBoxItem>20</ComboBoxItem>
+                            <ComboBoxItem>22</ComboBoxItem>
+                            <ComboBoxItem>24</ComboBoxItem>
+                            <ComboBoxItem>26</ComboBoxItem>
+                            <ComboBoxItem>28</ComboBoxItem>
+                            <ComboBoxItem>36</ComboBoxItem>
+                            <ComboBoxItem>48</ComboBoxItem>
+                            <ComboBoxItem>72</ComboBoxItem>
+                            <ComboBoxItem>84</ComboBoxItem>
+                            <ComboBoxItem>96</ComboBoxItem>
+                            <ComboBoxItem>100</ComboBoxItem>
+                            <ComboBoxItem>200</ComboBoxItem>
+                        </ComboBox>
+                    </ui:SettingsCard>
+                    <ui:SettingsCard ContentAlignment="Left">
+                        <ScrollViewer Padding="20,0"  VerticalScrollBarVisibility="Auto">
+                            <TextBlock x:Name="DateFontStylePreview" Text="The quick brown fox jump over the lazy dog.&#13;&#10;一只敏捷的棕色狐狸跳过一只懒惰的狗" HorizontalAlignment="Center" TextAlignment="Center" />
+                        </ScrollViewer>
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Description="" Header="" IsEnabled="True">
+                        <Button x:Name="ResetDateFormatButton" Content="重置" Margin="4,0,0,0" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:SettingsExpander Grid.Row="9" Grid.RowSpan="3"  x:Name="FormatSettingsCard"  Margin="0,0,0,4" Description="" Header="显示格式" IsEnabled="True">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xec34;"/>
+                </ui:SettingsExpander.HeaderIcon>
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="" Header="时间格式" IsEnabled="True">
+                    <TextBox x:Name="TimeFormatTextBox" Text="" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" TextWrapping="NoWrap" AcceptsReturn="True">
+                    </TextBox>
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Description="" Header="日期格式" IsEnabled="True">
+                        <TextBox x:Name="DateFormatTextBox" Text="" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" TextWrapping="NoWrap" AcceptsReturn="True">
+                        </TextBox>
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Description="" Header="" IsEnabled="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="1" x:Name="ResetFormatButton" Content="重置格式" Margin="4,0,0,0" />
+                            <Button Grid.Column="2" x:Name="ApplyFormatButton" Content="应用格式" Margin="4,0,0,0" />
+                            <ui:HyperlinkButton x:Name="GetFormatHelp" RaiseHyperlinkClicks="False" Content="显示格式说明" />
+                        </Grid>
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+
+            <ui:SettingsExpander Grid.Row="12" Grid.RowSpan="3"  x:Name="ColorSettingsCard"  Margin="0,0,0,4" Description="" Header="颜色" IsEnabled="True">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe790;"/>
+                </ui:SettingsExpander.HeaderIcon>
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="" Header="时间颜色" IsEnabled="True">
+                        <Button x:Name="TimeColorButton" Content="设置" Margin="4,0,0,0" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Description="" Header="日期颜色" IsEnabled="True">
+                        <Button x:Name="DateColorButton" Content="设置" Margin="4,0,0,0" />
+                    </ui:SettingsCard>
+                    <ui:SettingsCard Description="" Header="" IsEnabled="True">
+                        <Button x:Name="ResetColorButton" Content="重置" Margin="4,0,0,0" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+        </Grid>
    </ScrollViewer>
 </Page>

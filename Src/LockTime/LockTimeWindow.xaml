@@ -8,7 +8,7 @@
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
         Topmost="True"
-        Icon="appicon.ico"
+        Icon="Resources\appicon.ico"
         ui:WindowHelper.UseModernWindowStyle="True"
         ui:WindowHelper.SystemBackdropType="Acrylic"
         ui:TitleBar.IsBackButtonVisible="False"
@@ -30,8 +30,8 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="timelabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="96" FontFamily="Segoe UI Variable Display" />
-        <TextBlock Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="datelabel"  HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" />
+        <TextBlock Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="timelabel" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="96" FontFamily="Segoe UI Variable Display" TextAlignment="Center" />
+        <TextBlock Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="datelabel"  HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" TextAlignment="Center"  />
         <ui:CommandBar x:Name="CommandBar1" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" DockPanel.Dock="Bottom">
             <ui:AppBarButton  x:Name="Exitb"  Label="退出" FontSize="24" VerticalAlignment="Bottom" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Exitb_Click" ToolTipService.ToolTip="退出">
                 <ui:AppBarButton.Icon>

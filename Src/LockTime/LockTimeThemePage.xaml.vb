@@ -1,4 +1,5 @@
-﻿Imports iNKORE.UI.WPF.Modern.Controls
+﻿Imports iNKORE.UI.WPF.Modern
+Imports iNKORE.UI.WPF.Modern.Controls
 
 Class LockTimeThemePage
     '设置是否显示文字
@@ -71,84 +72,97 @@ Class LockTimeThemePage
     Private Sub Page_Loaded(sender As Object, e As RoutedEventArgs)
         'IsEnterV = 0
         'FontSizeV = 0
+
+        '############################################################
+        '隐藏工具栏文字选项初始化
         If My.Application.HideTextState = 1 Then
             HideTextToggleSwitch.IsOn = True
         Else
             HideTextToggleSwitch.IsOn = False
         End If
+
+        '############################################################
         '时间字体选择初始化
         Dim fontFamilies() As System.Drawing.FontFamily = System.Drawing.FontFamily.Families
         ' 遍历并打印所有字体名称
         For Each family As System.Drawing.FontFamily In fontFamilies
             TimeFontNameComboBox.Items.Add(family.Name)
         Next
-        TimeFontSizeComboBox.Items.Add(8)
-        TimeFontSizeComboBox.Items.Add(9)
-        TimeFontSizeComboBox.Items.Add(10)
-        TimeFontSizeComboBox.Items.Add(11)
-        TimeFontSizeComboBox.Items.Add(12)
-        TimeFontSizeComboBox.Items.Add(14)
-        TimeFontSizeComboBox.Items.Add(16)
-        TimeFontSizeComboBox.Items.Add(18)
-        TimeFontSizeComboBox.Items.Add(20)
-        TimeFontSizeComboBox.Items.Add(22)
-        TimeFontSizeComboBox.Items.Add(24)
-        TimeFontSizeComboBox.Items.Add(26)
-        TimeFontSizeComboBox.Items.Add(28)
-        TimeFontSizeComboBox.Items.Add(36)
-        TimeFontSizeComboBox.Items.Add(48)
-        TimeFontSizeComboBox.Items.Add(72)
-        TimeFontSizeComboBox.Items.Add(84)
-        TimeFontSizeComboBox.Items.Add(96)
-        TimeFontSizeComboBox.Items.Add(100)
-        TimeFontSizeComboBox.Items.Add(200)
+        'TimeFontSizeComboBox.Items.Add(8)
+        'TimeFontSizeComboBox.Items.Add(9)
+        'TimeFontSizeComboBox.Items.Add(10)
+        'TimeFontSizeComboBox.Items.Add(11)
+        'TimeFontSizeComboBox.Items.Add(12)
+        'TimeFontSizeComboBox.Items.Add(14)
+        'TimeFontSizeComboBox.Items.Add(16)
+        'TimeFontSizeComboBox.Items.Add(18)
+        'TimeFontSizeComboBox.Items.Add(20)
+        'TimeFontSizeComboBox.Items.Add(22)
+        'TimeFontSizeComboBox.Items.Add(24)
+        'TimeFontSizeComboBox.Items.Add(26)
+        'TimeFontSizeComboBox.Items.Add(28)
+        'TimeFontSizeComboBox.Items.Add(36)
+        'TimeFontSizeComboBox.Items.Add(48)
+        'TimeFontSizeComboBox.Items.Add(72)
+        'TimeFontSizeComboBox.Items.Add(84)
+        'TimeFontSizeComboBox.Items.Add(96)
+        'TimeFontSizeComboBox.Items.Add(100)
+        'TimeFontSizeComboBox.Items.Add(200)
         TimeFontStylePreview.FontSize = My.Application.TimeFontSize
         TimeFontStylePreview.FontFamily = New FontFamily(My.Application.TimeFontName)
         TimeFontNameComboBox.SelectedIndex = TimeFontNameComboBox.Items.IndexOf(TimeFontStylePreview.FontFamily.Source)
-        TimeFontSizeComboBox.SelectedIndex = TimeFontSizeComboBox.Items.IndexOf(TimeFontStylePreview.FontSize.ToString)
+        'If My.Application.Runa <> 1 Then
+        '    TimeFontSizeComboBox.SelectedIndex = TimeFontSizeComboBox.Items.IndexOf(20)
+        '    My.Application.Runa = 1
+        'End If
+
         '日期字体选择初始化
         For Each family As System.Drawing.FontFamily In fontFamilies
             DateFontNameComboBox.Items.Add(family.Name)
         Next
-        DateFontSizeComboBox.Items.Add(8)
-        DateFontSizeComboBox.Items.Add(9)
-        DateFontSizeComboBox.Items.Add(10)
-        DateFontSizeComboBox.Items.Add(11)
-        DateFontSizeComboBox.Items.Add(12)
-        DateFontSizeComboBox.Items.Add(14)
-        DateFontSizeComboBox.Items.Add(16)
-        DateFontSizeComboBox.Items.Add(18)
-        DateFontSizeComboBox.Items.Add(20)
-        DateFontSizeComboBox.Items.Add(22)
-        DateFontSizeComboBox.Items.Add(24)
-        DateFontSizeComboBox.Items.Add(26)
-        DateFontSizeComboBox.Items.Add(28)
-        DateFontSizeComboBox.Items.Add(36)
-        DateFontSizeComboBox.Items.Add(48)
-        DateFontSizeComboBox.Items.Add(72)
-        DateFontSizeComboBox.Items.Add(84)
-        DateFontSizeComboBox.Items.Add(96)
-        DateFontSizeComboBox.Items.Add(100)
-        DateFontSizeComboBox.Items.Add(200)
+        'DateFontSizeComboBox.Items.Add(8)
+        'DateFontSizeComboBox.Items.Add(9)
+        'DateFontSizeComboBox.Items.Add(10)
+        'DateFontSizeComboBox.Items.Add(11)
+        'DateFontSizeComboBox.Items.Add(12)
+        'DateFontSizeComboBox.Items.Add(14)
+        'DateFontSizeComboBox.Items.Add(16)
+        'DateFontSizeComboBox.Items.Add(18)
+        'DateFontSizeComboBox.Items.Add(20)
+        'DateFontSizeComboBox.Items.Add(22)
+        'DateFontSizeComboBox.Items.Add(24)
+        'DateFontSizeComboBox.Items.Add(26)
+        'DateFontSizeComboBox.Items.Add(28)
+        'DateFontSizeComboBox.Items.Add(36)
+        'DateFontSizeComboBox.Items.Add(48)
+        'DateFontSizeComboBox.Items.Add(72)
+        'DateFontSizeComboBox.Items.Add(84)
+        'DateFontSizeComboBox.Items.Add(96)
+        'DateFontSizeComboBox.Items.Add(100)
+        'DateFontSizeComboBox.Items.Add(200)
         DateFontStylePreview.FontSize = My.Application.DateFontSize
         DateFontStylePreview.FontFamily = New FontFamily(My.Application.DateFontName)
         DateFontNameComboBox.SelectedIndex = DateFontNameComboBox.Items.IndexOf(DateFontStylePreview.FontFamily.Source)
-        DateFontSizeComboBox.SelectedIndex = DateFontSizeComboBox.Items.IndexOf(DateFontStylePreview.FontSize.ToString)
+        'If My.Application.Runa <> 1 Then
+        '    DateFontSizeComboBox.SelectedIndex = DateFontSizeComboBox.Items.IndexOf(DateFontStylePreview.FontSize)
+        '    My.Application.Runa = 1
+        'End If
+
         '设置显示内容
         'MsgBox(FontNameComboBox.Items.IndexOf(FontStylePreview.FontSize))
         If TimeFontNameComboBox.SelectedIndex = -1 Then
             TimeFontNameComboBox.Text = TimeFontStylePreview.FontFamily.Source
         End If
-        If TimeFontSizeComboBox.SelectedIndex = -1 Then
-            TimeFontSizeComboBox.Text = TimeFontStylePreview.FontSize.ToString
-        End If
+        'If TimeFontSizeComboBox.SelectedIndex = -1 Then
+        TimeFontSizeComboBox.Text = My.Application.TimeFontSize
+        'End If
 
         If DateFontNameComboBox.SelectedIndex = -1 Then
             DateFontNameComboBox.Text = DateFontStylePreview.FontFamily.Source
         End If
-        If DateFontSizeComboBox.SelectedIndex = -1 Then
-            DateFontSizeComboBox.Text = DateFontStylePreview.FontSize.ToString
-        End If
+        'If DateFontSizeComboBox.SelectedIndex = -1 Then
+        DateFontSizeComboBox.Text = My.Application.DateFontSize
+        'End If
 
         '关联时间
         AddHandler TimeFontNameComboBox.SelectionChanged, AddressOf TimeFontNameComboBox_SelectionChanged
@@ -156,9 +170,14 @@ Class LockTimeThemePage
 
         AddHandler DateFontNameComboBox.SelectionChanged, AddressOf DateFontNameComboBox_SelectionChanged
         AddHandler DateFontSizeComboBox.SelectionChanged, AddressOf DateFontSizeComboBox_SelectionChanged
+
+        '############################################################
+        '设置显示格式初始化
+        TimeFormatTextBox.Text = My.Application.TimeFormat
+        DateFormatTextBox.Text = My.Application.DateFormat
     End Sub
     '时间字体选择处理
-    Private Sub TimeFontNameComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
+    Public Sub TimeFontNameComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
         TimeFontStylePreview.FontFamily = New FontFamily(TimeFontNameComboBox.Items(TimeFontNameComboBox.SelectedIndex))
         My.Application.TimeFontName = TimeFontStylePreview.FontFamily.Source
         Try
@@ -170,7 +189,7 @@ Class LockTimeThemePage
     '时间字体大小处理
     'Dim IsEnterV As Integer
     'Dim FontSizeV As Integer
-    Private Sub TimeFontSizeComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
+    Public Sub TimeFontSizeComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
         'MessageBox.Show(TimeFontSizeComboBox.SelectedIndex)
         'If IsEnterV = 1 And TimeFontSizeComboBox.SelectedIndex = -1 Then
         'IsEnterV = 0
@@ -199,6 +218,66 @@ Class LockTimeThemePage
         '    End Try
         ' End If
     End Sub
+    '重置时间字体
+    Private Async Sub ResetTimeFormatButton_Click(sender As Object, e As RoutedEventArgs) Handles ResetTimeFormatButton.Click
+        Dim dialog As ContentDialog = New ContentDialog()
+        dialog.Title = "确定要重置自定义时间字体以及样式吗？"
+        dialog.PrimaryButtonText = "确定"
+        dialog.CloseButtonText = "取消"
+        dialog.DefaultButton = ContentDialogButton.Close
+        dialog.Content = "这将会重置你的自定义时间字体以及样式格式。此操作不可恢复。"
+        Dim result = Await dialog.ShowAsync()
+        If result = ContentDialogResult.Primary Then
+            My.Application.TimeFontSize = 96
+            My.Application.TimeFontName = "Segoe UI Variable Display"
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontSize", My.Application.TimeFontSize)
+            Catch ex As Exception
+            End Try
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontName", My.Application.TimeFontName)
+            Catch ex As Exception
+            End Try
+            TimeFontStylePreview.FontSize = My.Application.TimeFontSize
+            TimeFontStylePreview.FontFamily = New FontFamily(My.Application.TimeFontName)
+            TimeFontNameComboBox.SelectedIndex = TimeFontNameComboBox.Items.IndexOf(TimeFontStylePreview.FontFamily.Source)
+            If TimeFontNameComboBox.SelectedIndex = -1 Then
+                TimeFontNameComboBox.Text = TimeFontStylePreview.FontFamily.Source
+            End If
+            TimeFontSizeComboBox.Text = My.Application.TimeFontSize
+            My.Application.SettingsState = 1
+        End If
+    End Sub
+    '重置日期字体
+    Private Async Sub ResetDateFormatButton_Click(sender As Object, e As RoutedEventArgs) Handles ResetDateFormatButton.Click
+        Dim dialog As ContentDialog = New ContentDialog()
+        dialog.Title = "确定要重置自定义日期字体以及样式格式吗？"
+        dialog.PrimaryButtonText = "确定"
+        dialog.CloseButtonText = "取消"
+        dialog.DefaultButton = ContentDialogButton.Close
+        dialog.Content = "这将会重置你的自定义日期字体以及样式格式。此操作不可恢复。"
+        Dim result = Await dialog.ShowAsync()
+        If result = ContentDialogResult.Primary Then
+            My.Application.DateFontSize = 36
+            My.Application.DateFontName = "Microsoft YaHei UI"
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockDate\2.0\Settings", "DateFontSize", My.Application.DateFontSize)
+            Catch ex As Exception
+            End Try
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockDate\2.0\Settings", "DateFontName", My.Application.DateFontName)
+            Catch ex As Exception
+            End Try
+            DateFontStylePreview.FontSize = My.Application.DateFontSize
+            DateFontStylePreview.FontFamily = New FontFamily(My.Application.DateFontName)
+            DateFontNameComboBox.SelectedIndex = DateFontNameComboBox.Items.IndexOf(DateFontStylePreview.FontFamily.Source)
+            If DateFontNameComboBox.SelectedIndex = -1 Then
+                DateFontNameComboBox.Text = DateFontStylePreview.FontFamily.Source
+            End If
+            DateFontSizeComboBox.Text = My.Application.DateFontSize
+            My.Application.SettingsState = 1
+        End If
+    End Sub
 
     'Private Sub TimeFontSizeComboBox_KeyDown(sender As Object, e As KeyEventArgs) Handles TimeFontSizeComboBox.KeyDown
     '    Dim e1 As SelectionChangedEventArgs = Nothing
@@ -209,7 +288,7 @@ Class LockTimeThemePage
     'End Sub
 
     '日期字体选择处理
-    Private Sub DateFontNameComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
+    Public Sub DateFontNameComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
         DateFontStylePreview.FontFamily = New FontFamily(DateFontNameComboBox.Items(DateFontNameComboBox.SelectedIndex))
         My.Application.DateFontName = DateFontStylePreview.FontFamily.Source
         Try
@@ -219,7 +298,7 @@ Class LockTimeThemePage
         My.Application.SettingsState = 1
     End Sub
     '日期字体大小处理
-    Private Sub DateFontSizeComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
+    Public Sub DateFontSizeComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
         Try
             DateFontStylePreview.FontSize = Replace(DateFontSizeComboBox.SelectedValue.ToString, "System.Windows.Controls.ComboBoxItem: ", "")
         Catch ex As Exception
@@ -232,5 +311,168 @@ Class LockTimeThemePage
         Catch ex As Exception
         End Try
         My.Application.SettingsState = 1
+    End Sub
+    '应用日期、时间格式
+    Private Sub ApplyFormatButton_Click(sender As Object, e As RoutedEventArgs) Handles ApplyFormatButton.Click
+        My.Application.TimeFormat = TimeFormatTextBox.Text
+        My.Application.DateFormat = DateFormatTextBox.Text
+        Try
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat)
+        Catch eex As Exception
+        End Try
+        Try
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat)
+        Catch eex As Exception
+        End Try
+    End Sub
+    '重置日期、时间格式
+    Private Async Sub ResetFormatButton_Click(sender As Object, e As RoutedEventArgs) Handles ResetFormatButton.Click
+        Dim dialog As ContentDialog = New ContentDialog()
+        dialog.Title = "确定要重置自定义格式吗？"
+        dialog.PrimaryButtonText = "确定"
+        dialog.CloseButtonText = "取消"
+        dialog.DefaultButton = ContentDialogButton.Close
+        dialog.Content = "这将会重置你的自定义格式。此操作不可恢复。"
+        Dim result = Await dialog.ShowAsync()
+        If result = ContentDialogResult.Primary Then
+            My.Application.TimeFormat = "HH:mm:ss"
+            My.Application.DateFormat = "yyyy年 M月 d日"
+            TimeFormatTextBox.Text = My.Application.TimeFormat
+            DateFormatTextBox.Text = My.Application.DateFormat
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat)
+            Catch eex As Exception
+            End Try
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat)
+            Catch eex As Exception
+            End Try
+        End If
+    End Sub
+
+    Private Async Sub GetFormatHelp_Click(sender As Object, e As RoutedEventArgs) Handles GetFormatHelp.Click
+        Dim dialog As ContentDialog = New ContentDialog()
+        dialog.Title = "显示格式说明"
+        dialog.PrimaryButtonText = "确定"
+        'dialog.SecondaryButtonText = "Don't Save"
+        'dialog.CloseButtonText = "取消"
+        dialog.DefaultButton = ContentDialogButton.Primary
+        dialog.Content = New LockTimeFormatHelpPage
+        'dialog.Content = "这将会退出时钟锁屏"
+        Await dialog.ShowAsync()
+        'Dim result = Await dialog.ShowAsync()
+    End Sub
+    '设置时间颜色
+    Private Sub TimeColorButton_Click(sender As Object, e As RoutedEventArgs) Handles TimeColorButton.Click
+        Dim ColorDialog1 As New System.Windows.Forms.ColorDialog
+        ColorDialog1.FullOpen = True
+        ColorDialog1.Color = My.Application.TimeColor
+        If ColorDialog1.ShowDialog = Forms.DialogResult.OK Then
+            My.Application.TimeColor = ColorDialog1.Color
+            My.Application.SettingsState = 1
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", ColorDialog1.Color.R)
+            Catch ex As Exception
+            End Try
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", ColorDialog1.Color.G)
+            Catch ex As Exception
+            End Try
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", ColorDialog1.Color.B)
+            Catch ex As Exception
+            End Try
+        End If
+    End Sub
+    '设置日期颜色
+    Private Sub DateColorButton_Click(sender As Object, e As RoutedEventArgs) Handles DateColorButton.Click
+        Dim ColorDialog1 As New System.Windows.Forms.ColorDialog
+        ColorDialog1.FullOpen = True
+        ColorDialog1.Color = My.Application.DateColor
+        If ColorDialog1.ShowDialog = Forms.DialogResult.OK Then
+            My.Application.DateColor = ColorDialog1.Color
+            My.Application.SettingsState = 1
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", ColorDialog1.Color.R)
+            Catch ex As Exception
+            End Try
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", ColorDialog1.Color.G)
+            Catch ex As Exception
+            End Try
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", ColorDialog1.Color.B)
+            Catch ex As Exception
+            End Try
+        End If
+    End Sub
+    '重置设置
+    Private Async Sub ResetColorButton_Click(sender As Object, e As RoutedEventArgs) Handles ResetColorButton.Click
+        Dim dialog As ContentDialog = New ContentDialog()
+        dialog.Title = "确定要重置自定义显示颜色吗？"
+        dialog.PrimaryButtonText = "确定"
+        dialog.CloseButtonText = "取消"
+        dialog.DefaultButton = ContentDialogButton.Close
+        dialog.Content = "这将会重置你的自定义显示颜色。此操作不可恢复。"
+        Dim result = Await dialog.ShowAsync()
+        If result = ContentDialogResult.Primary Then
+            If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 0)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 0)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 0)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 0)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 0)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 0)
+                Catch ex As Exception
+                End Try
+                My.Application.TimeColor = System.Drawing.Color.FromArgb(0, 0, 0)
+                My.Application.DateColor = System.Drawing.Color.FromArgb(0, 0, 0)
+                My.Application.SettingsState = 1
+            Else
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 255)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 255)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 255)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 255)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 255)
+                Catch ex As Exception
+                End Try
+                Try
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 255)
+                Catch ex As Exception
+                End Try
+                My.Application.TimeColor = System.Drawing.Color.FromArgb(255, 255, 255)
+                My.Application.DateColor = System.Drawing.Color.FromArgb(255, 255, 255)
+                My.Application.SettingsState = 1
+            End If
+        End If
     End Sub
 End Class
