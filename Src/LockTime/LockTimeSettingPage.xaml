@@ -3,11 +3,35 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
       xmlns:local="clr-namespace:LockTime"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="LockTimeSettingPage">
+    <ScrollViewer Padding="20,0" VerticalScrollBarVisibility="Auto">
     <Grid>
-        <GroupBox x:Name="groupBox" Header="GroupBox" HorizontalAlignment="Left" Height="117" Margin="22,79,0,0" VerticalAlignment="Top" Width="211"/>
+            <ui:SettingsExpander Description="版权所有 © 2023-2025 CJH。保留所有权利。"
+                            Header="时钟锁屏">
+            <ui:SettingsExpander.HeaderIcon>
+                <Image Source="/Resources/app.ico"
+                            Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
+            </ui:SettingsExpander.HeaderIcon>
+            <TextBlock Foreground="{DynamicResource {x:Static ui:ThemeKeys.TextFillColorSecondaryBrushKey}}"
+                    Text="0.10.0" />
+            <ui:SettingsExpander.Items>
+                <ui:SettingsCard HorizontalContentAlignment="Left"
+                                ContentAlignment="Left">
+                    <StackPanel Margin="-12,0,0,0"
+                        Orientation="Vertical">
+                        <ui:HyperlinkButton Content="Link 1" />
+                        <ui:HyperlinkButton Content="Link 2" />
+                        <ui:HyperlinkButton Content="Link 3" />
+                    </StackPanel>
+                </ui:SettingsCard>
+            </ui:SettingsExpander.Items>
+        </ui:SettingsExpander>
+        <ui:HyperlinkButton Margin="0,8,0,0"
+                    Content="Send feedback" />
     </Grid>
+    </ScrollViewer>
 </Page>

@@ -44,11 +44,6 @@
                     <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Settings}"/>
                 </ui:AppBarButton.Icon>
             </ui:AppBarButton>
-            <ui:AppBarButton x:Name="Aboutb" Label="关于" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Aboutb_Click" ToolTipService.ToolTip="关于"  >
-                <ui:AppBarButton.Icon>
-                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Info}"/>
-                </ui:AppBarButton.Icon>
-            </ui:AppBarButton>
             <ui:AppBarSeparator/>
             <ui:AppBarButton x:Name="Themeb" Label="颜色" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Themeb_Click" ToolTipService.ToolTip="颜色">
                 <ui:AppBarButton.Icon>

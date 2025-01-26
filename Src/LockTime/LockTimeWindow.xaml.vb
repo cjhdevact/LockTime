@@ -132,7 +132,7 @@ Class LockTimeWindow
 
         '颜色模式
         Dim keyValue As Object
-        keyValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "-1")
+        keyValue = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", Chr(10))
         keyValue = keyValue.ToString.ToLower
         If keyValue = "dark" Then
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark
@@ -144,14 +144,14 @@ Class LockTimeWindow
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light
             Themeb.ToolTip = "当前颜色为浅色模式"
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light")
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light", RegistryValueKind.String)
             Catch ex As Exception
             End Try
         End If
 
         '背景
         Dim keyValue2 As Object
-        keyValue2 = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "-1")
+        keyValue2 = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", Chr(10))
         keyValue2 = keyValue2.ToString.ToLower
         If keyValue2 = "mica" Then
             Backgroundb.ToolTip = "当前背景为云母"
@@ -177,14 +177,14 @@ Class LockTimeWindow
                 Backgroundb.ToolTip = "当前没有背景效果"
                 WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.None)
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "None")
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "None", RegistryValueKind.String)
                 Catch ex As Exception
                 End Try
             Else
                 Backgroundb.ToolTip = "当前背景为亚克力"
                 WindowHelper.SetSystemBackdropType(Me, iNKORE.UI.WPF.Modern.Helpers.Styles.BackdropType.Acrylic)
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic")
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic", RegistryValueKind.String)
                 Catch ex As Exception
                 End Try
             End If
@@ -195,13 +195,13 @@ Class LockTimeWindow
         If My.Application.HideTextState = -1 Then
             My.Application.HideTextState = 0
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 0)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 0, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
         ElseIf My.Application.HideTextState > 1 Then
             My.Application.HideTextState = 0
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 0)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 0, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
         End If
@@ -211,7 +211,7 @@ Class LockTimeWindow
         If My.Application.TimeFontSize < 1 Then
             My.Application.TimeFontSize = timelabel.FontSize
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontSize", timelabel.FontSize)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontSize", timelabel.FontSize, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
         End If
@@ -222,7 +222,7 @@ Class LockTimeWindow
         If My.Application.TimeFontName = Chr(10) Then
             My.Application.TimeFontName = timelabel.FontFamily.Source
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontName", timelabel.FontFamily.Source)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontName", timelabel.FontFamily.Source, RegistryValueKind.String)
             Catch ex As Exception
             End Try
         End If
@@ -233,7 +233,7 @@ Class LockTimeWindow
         If My.Application.DateFontSize < 1 Then
             My.Application.DateFontSize = datelabel.FontSize
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontSize", datelabel.FontSize)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontSize", datelabel.FontSize, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
         End If
@@ -244,7 +244,7 @@ Class LockTimeWindow
         If My.Application.DateFontName = Chr(10) Then
             My.Application.DateFontName = datelabel.FontFamily.Source
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontName", datelabel.FontFamily.Source)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontName", datelabel.FontFamily.Source, RegistryValueKind.String)
             Catch ex As Exception
             End Try
         End If
@@ -255,7 +255,7 @@ Class LockTimeWindow
         If My.Application.TimeFormat = Chr(10) Or My.Application.TimeFormat = "" Then
             My.Application.TimeFormat = "HH:mm:ss"
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat, RegistryValueKind.String)
             Catch ex As Exception
             End Try
         End If
@@ -265,7 +265,7 @@ Class LockTimeWindow
         If My.Application.DateFormat = Chr(10) Or My.Application.DateFormat = "" Then
             My.Application.DateFormat = "yyyy年 M月 d日"
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat, RegistryValueKind.String)
             Catch ex As Exception
             End Try
         End If
@@ -279,13 +279,13 @@ Class LockTimeWindow
             If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
                 TimeColorR = 0
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             Else
                 TimeColorR = 255
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -295,13 +295,13 @@ Class LockTimeWindow
             If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
                 TimeColorG = 0
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             Else
                 TimeColorG = 255
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -311,13 +311,13 @@ Class LockTimeWindow
             If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
                 TimeColorB = 0
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             Else
                 TimeColorB = 255
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -334,13 +334,13 @@ Class LockTimeWindow
             If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
                 DateColorR = 0
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             Else
                 DateColorR = 255
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -350,13 +350,13 @@ Class LockTimeWindow
             If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
                 DateColorG = 0
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             Else
                 DateColorG = 255
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -366,13 +366,13 @@ Class LockTimeWindow
             If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
                 DateColorB = 0
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             Else
                 DateColorB = 255
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -399,7 +399,6 @@ Class LockTimeWindow
             'Rightb.LabelPosition = CommandBarLabelPosition.Collapsed
             Exitb.Label = ""
             Settingb.Label = ""
-            Aboutb.Label = ""
             Themeb.Label = ""
             Backgroundb.Label = ""
             Windowb.Label = ""
@@ -422,7 +421,6 @@ Class LockTimeWindow
             'Rightb.LabelPosition = CommandBarLabelPosition.Default
             Exitb.Label = "退出"
             Settingb.Label = "设置"
-            Aboutb.Label = "关于"
             Themeb.Label = "颜色"
             Backgroundb.Label = "背景"
             If Me.WindowState = WindowState.Maximized Then
@@ -478,7 +476,7 @@ Class LockTimeWindow
             aa = Format(Now, "HH:mm:ss")
             My.Application.TimeFormat = "HH:mm:ss"
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat, RegistryValueKind.String)
             Catch eex As Exception
             End Try
             MessageBox.Show("格式化时间失败，已重置默认时间格式。", "错误", MessageBoxButton.OK, MessageBoxImage.Error)
@@ -491,7 +489,7 @@ Class LockTimeWindow
             a = Format(Now, "yyyy年 M月 d日")
             My.Application.DateFormat = "yyyy年 M月 d日"
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat, RegistryValueKind.String)
             Catch eex As Exception
             End Try
             MessageBox.Show("格式化日期失败，已重置默认日期格式。", "错误", MessageBoxButton.OK, MessageBoxImage.Error)
@@ -526,15 +524,15 @@ Class LockTimeWindow
                 timelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0))
                 My.Application.TimeColor = System.Drawing.Color.FromArgb(0, 0, 0)
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -542,15 +540,15 @@ Class LockTimeWindow
                 datelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 0, 0))
                 My.Application.DateColor = System.Drawing.Color.FromArgb(0, 0, 0)
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -562,8 +560,8 @@ Class LockTimeWindow
                     Themeb.Label = ""
                 End If
                 Try
-                        My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light")
-                    Catch ex As Exception
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light", RegistryValueKind.String)
+                Catch ex As Exception
                     End Try
                 End If
             Else
@@ -574,15 +572,15 @@ Class LockTimeWindow
                 timelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255))
                 My.Application.TimeColor = System.Drawing.Color.FromArgb(255, 255, 255)
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -590,15 +588,15 @@ Class LockTimeWindow
                 datelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 255, 255))
                 My.Application.DateColor = System.Drawing.Color.FromArgb(255, 255, 255)
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
             End If
@@ -611,7 +609,7 @@ Class LockTimeWindow
                     Themeb.Label = ""
                 End If
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Dark")
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Dark", RegistryValueKind.String)
                 Catch ex As Exception
                 End Try
             End If
@@ -695,18 +693,6 @@ Class LockTimeWindow
             'Windowb.Icon = FontIcon1
         End If
     End Sub
-    '关于
-    Private Async Sub Aboutb_Click(sender As Object, e As RoutedEventArgs)
-        Dim dialog As ContentDialog = New ContentDialog()
-        dialog.Title = "关于时钟锁屏"
-        dialog.PrimaryButtonText = "确定"
-        'dialog.SecondaryButtonText = "Don't Save"
-        'dialog.CloseButtonText = "取消"
-        dialog.DefaultButton = ContentDialogButton.Primary
-        dialog.Content = New LockTimeAboutPage
-        'dialog.Content = "这将会退出时钟锁屏"
-        Await dialog.ShowAsync()
-    End Sub
     '居中
     Private Sub Centerb_Click(sender As Object, e As RoutedEventArgs)
         datelabel.SetValue(Grid.ColumnProperty, 0)
@@ -784,7 +770,7 @@ Class LockTimeWindow
                     Backgroundb.Label = ""
                 End If
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Mica")
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Mica", RegistryValueKind.String)
                 Catch ex As Exception
                 End Try
             End If
@@ -800,7 +786,7 @@ Class LockTimeWindow
                     Backgroundb.Label = ""
                 End If
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic")
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic", RegistryValueKind.String)
                 Catch ex As Exception
                 End Try
             End If
@@ -816,7 +802,7 @@ Class LockTimeWindow
                     Backgroundb.Label = ""
                 End If
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Tabbed")
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Tabbed", RegistryValueKind.String)
                 Catch ex As Exception
                 End Try
             End If
@@ -832,7 +818,7 @@ Class LockTimeWindow
                     Backgroundb.Label = ""
                 End If
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic10")
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic10", RegistryValueKind.String)
                 Catch ex As Exception
                 End Try
             End If
@@ -848,7 +834,7 @@ Class LockTimeWindow
                     Backgroundb.Label = ""
                 End If
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic11")
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "Acrylic11", RegistryValueKind.String)
                 Catch ex As Exception
                 End Try
             End If
@@ -864,7 +850,7 @@ Class LockTimeWindow
                     Backgroundb.Label = ""
                 End If
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "None")
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Background", "None", RegistryValueKind.String)
                 Catch ex As Exception
                 End Try
             End If

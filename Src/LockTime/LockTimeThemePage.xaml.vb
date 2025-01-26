@@ -1,74 +1,35 @@
-﻿Imports iNKORE.UI.WPF.Modern
+﻿'****************************************************************************
+'    LockTime
+'    Copyright (C) 2023-2025  CJH
+'
+'    This program is free software: you can redistribute it and/or modify
+'    it under the terms of the GNU General Public License as published by
+'    the Free Software Foundation, either version 3 of the License, or
+'    (at your option) any later version.
+'
+'    This program is distributed in the hope that it will be useful,
+'    but WITHOUT ANY WARRANTY; without even the implied warranty of
+'    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+'    GNU General Public License for more details.
+'
+'    You should have received a copy of the GNU General Public License
+'    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+'****************************************************************************
+'/*****************************************************\
+'*                                                     *
+'*     LockTime - LockTimeThemePage.xaml.vb            *
+'*                                                     *
+'*     Copyright (c) CJH.                              *
+'*                                                     *
+'*     Theme settings.                                 *
+'*                                                     *
+'\*****************************************************/
+Imports iNKORE.UI.WPF.Modern
 Imports iNKORE.UI.WPF.Modern.Controls
+Imports Microsoft.Win32
 
 Class LockTimeThemePage
-    '设置是否显示文字
-    '通过把设置一个全局变量来表示是否更新设置，再在主窗口设置一个定时器来定时获取这个变量的状态来判断是否要更新主界面设置
-    'WPF窗体之间传递变量怎么这么难？
-    Private Sub HideTextToggleSwitch_Toggled(sender As Object, e As RoutedEventArgs) Handles HideTextToggleSwitch.Toggled
-        If HideTextToggleSwitch.IsOn = True Then
-            My.Application.HideTextState = 1
-            Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 1)
-            Catch ex As Exception
-            End Try
-            My.Application.SettingsState = 1
-            'Dispatcher.Invoke(New LockTimeWindow.HideTextStateSub(AddressOf My.Windows.m_LockTimeWindow.SetUIText), 1)
-            'My.Windows.LockTimeWindow.Exitb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Settingb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Aboutb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Themeb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Backgroundb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Windowb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Centerb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Topb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Bottomb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Leftb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Rightb.LabelPosition = CommandBarLabelPosition.Collapsed
-            'My.Windows.LockTimeWindow.Exitb.Label = ""
-            'My.Windows.LockTimeWindow.Settingb.Content = ""
-            'My.Windows.LockTimeWindow.Aboutb.Content = ""
-            'My.Windows.LockTimeWindow.Themeb.Content = ""
-            'My.Windows.LockTimeWindow.Backgroundb.Content = ""
-            'My.Windows.LockTimeWindow.Windowb.Content = ""
-            'My.Windows.LockTimeWindow.Centerb.Content = ""
-            'My.Windows.LockTimeWindow.Topb.Content = ""
-            'My.Windows.LockTimeWindow.Bottomb.Content = ""
-            'My.Windows.LockTimeWindow.Leftb.Content = ""
-            'My.Windows.LockTimeWindow.Rightb.Content = ""
-        Else
-            My.Application.HideTextState = 0
-            Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 0)
-            Catch ex As Exception
-            End Try
-            My.Application.SettingsState = 1
-            'Dispatcher.Invoke(New LockTimeWindow.HideTextStateSub(AddressOf My.Windows.LockTimeWindow.SetUIText), 0)
-            'My.Windows.LockTimeWindow.Exitb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Settingb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Aboutb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Themeb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Backgroundb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Windowb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Centerb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Topb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Bottomb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Leftb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Rightb.LabelPosition = CommandBarLabelPosition.Default
-            'My.Windows.LockTimeWindow.Exitb.Label = "退出"
-            'My.Windows.LockTimeWindow.Settingb.Content = "设置"
-            'My.Windows.LockTimeWindow.Aboutb.Content = "关于"
-            'My.Windows.LockTimeWindow.Themeb.Content = "颜色"
-            'My.Windows.LockTimeWindow.Backgroundb.Content = "背景"
-            'My.Windows.LockTimeWindow.Windowb.Content = "窗口"
-            'My.Windows.LockTimeWindow.Centerb.Content = "居中"
-            'My.Windows.LockTimeWindow.Topb.Content = "顶部"
-            'My.Windows.LockTimeWindow.Bottomb.Content = "底部"
-            'My.Windows.LockTimeWindow.Leftb.Content = "左侧"
-            'My.Windows.LockTimeWindow.Rightb.Content = "右侧"
-        End If
-    End Sub
-
+    '初始化页面
     Private Sub Page_Loaded(sender As Object, e As RoutedEventArgs)
         'IsEnterV = 0
         'FontSizeV = 0
@@ -176,12 +137,78 @@ Class LockTimeThemePage
         TimeFormatTextBox.Text = My.Application.TimeFormat
         DateFormatTextBox.Text = My.Application.DateFormat
     End Sub
+    '设置是否显示文字
+    '通过把设置一个全局变量来表示是否更新设置，再在主窗口设置一个定时器来定时获取这个变量的状态来判断是否要更新主界面设置
+    'WPF窗体之间传递变量怎么这么难？
+    Private Sub HideTextToggleSwitch_Toggled(sender As Object, e As RoutedEventArgs) Handles HideTextToggleSwitch.Toggled
+        If HideTextToggleSwitch.IsOn = True Then
+            My.Application.HideTextState = 1
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 1, RegistryValueKind.DWord)
+            Catch ex As Exception
+            End Try
+            My.Application.SettingsState = 1
+            'Dispatcher.Invoke(New LockTimeWindow.HideTextStateSub(AddressOf My.Windows.m_LockTimeWindow.SetUIText), 1)
+            'My.Windows.LockTimeWindow.Exitb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Settingb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Aboutb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Themeb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Backgroundb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Windowb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Centerb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Topb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Bottomb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Leftb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Rightb.LabelPosition = CommandBarLabelPosition.Collapsed
+            'My.Windows.LockTimeWindow.Exitb.Label = ""
+            'My.Windows.LockTimeWindow.Settingb.Content = ""
+            'My.Windows.LockTimeWindow.Aboutb.Content = ""
+            'My.Windows.LockTimeWindow.Themeb.Content = ""
+            'My.Windows.LockTimeWindow.Backgroundb.Content = ""
+            'My.Windows.LockTimeWindow.Windowb.Content = ""
+            'My.Windows.LockTimeWindow.Centerb.Content = ""
+            'My.Windows.LockTimeWindow.Topb.Content = ""
+            'My.Windows.LockTimeWindow.Bottomb.Content = ""
+            'My.Windows.LockTimeWindow.Leftb.Content = ""
+            'My.Windows.LockTimeWindow.Rightb.Content = ""
+        Else
+            My.Application.HideTextState = 0
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "HideText", 0, RegistryValueKind.DWord)
+            Catch ex As Exception
+            End Try
+            My.Application.SettingsState = 1
+            'Dispatcher.Invoke(New LockTimeWindow.HideTextStateSub(AddressOf My.Windows.LockTimeWindow.SetUIText), 0)
+            'My.Windows.LockTimeWindow.Exitb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Settingb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Aboutb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Themeb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Backgroundb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Windowb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Centerb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Topb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Bottomb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Leftb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Rightb.LabelPosition = CommandBarLabelPosition.Default
+            'My.Windows.LockTimeWindow.Exitb.Label = "退出"
+            'My.Windows.LockTimeWindow.Settingb.Content = "设置"
+            'My.Windows.LockTimeWindow.Aboutb.Content = "关于"
+            'My.Windows.LockTimeWindow.Themeb.Content = "颜色"
+            'My.Windows.LockTimeWindow.Backgroundb.Content = "背景"
+            'My.Windows.LockTimeWindow.Windowb.Content = "窗口"
+            'My.Windows.LockTimeWindow.Centerb.Content = "居中"
+            'My.Windows.LockTimeWindow.Topb.Content = "顶部"
+            'My.Windows.LockTimeWindow.Bottomb.Content = "底部"
+            'My.Windows.LockTimeWindow.Leftb.Content = "左侧"
+            'My.Windows.LockTimeWindow.Rightb.Content = "右侧"
+        End If
+    End Sub
     '时间字体选择处理
     Public Sub TimeFontNameComboBox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
         TimeFontStylePreview.FontFamily = New FontFamily(TimeFontNameComboBox.Items(TimeFontNameComboBox.SelectedIndex))
         My.Application.TimeFontName = TimeFontStylePreview.FontFamily.Source
         Try
-            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontName", My.Application.TimeFontName)
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontName", My.Application.TimeFontName, RegistryValueKind.String)
         Catch ex As Exception
         End Try
         My.Application.SettingsState = 1
@@ -203,7 +230,7 @@ Class LockTimeThemePage
         End Try
         My.Application.TimeFontSize = TimeFontStylePreview.FontSize
         Try
-            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontSize", My.Application.TimeFontSize)
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontSize", My.Application.TimeFontSize, RegistryValueKind.DWord)
         Catch ex As Exception
         End Try
         My.Application.SettingsState = 1
@@ -231,11 +258,11 @@ Class LockTimeThemePage
             My.Application.TimeFontSize = 96
             My.Application.TimeFontName = "Segoe UI Variable Display"
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontSize", My.Application.TimeFontSize)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontSize", My.Application.TimeFontSize, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontName", My.Application.TimeFontName)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFontName", My.Application.TimeFontName, RegistryValueKind.String)
             Catch ex As Exception
             End Try
             TimeFontStylePreview.FontSize = My.Application.TimeFontSize
@@ -261,11 +288,11 @@ Class LockTimeThemePage
             My.Application.DateFontSize = 36
             My.Application.DateFontName = "Microsoft YaHei UI"
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockDate\2.0\Settings", "DateFontSize", My.Application.DateFontSize)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockDate\2.0\Settings", "DateFontSize", My.Application.DateFontSize, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockDate\2.0\Settings", "DateFontName", My.Application.DateFontName)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockDate\2.0\Settings", "DateFontName", My.Application.DateFontName, RegistryValueKind.String)
             Catch ex As Exception
             End Try
             DateFontStylePreview.FontSize = My.Application.DateFontSize
@@ -292,7 +319,7 @@ Class LockTimeThemePage
         DateFontStylePreview.FontFamily = New FontFamily(DateFontNameComboBox.Items(DateFontNameComboBox.SelectedIndex))
         My.Application.DateFontName = DateFontStylePreview.FontFamily.Source
         Try
-            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontName", My.Application.DateFontName)
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontName", My.Application.DateFontName, RegistryValueKind.String)
         Catch ex As Exception
         End Try
         My.Application.SettingsState = 1
@@ -307,7 +334,7 @@ Class LockTimeThemePage
         End Try
         My.Application.DateFontSize = DateFontStylePreview.FontSize
         Try
-            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontSize", My.Application.DateFontSize)
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontSize", My.Application.DateFontSize, RegistryValueKind.DWord)
         Catch ex As Exception
         End Try
         My.Application.SettingsState = 1
@@ -317,11 +344,11 @@ Class LockTimeThemePage
         My.Application.TimeFormat = TimeFormatTextBox.Text
         My.Application.DateFormat = DateFormatTextBox.Text
         Try
-            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat)
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat, RegistryValueKind.String)
         Catch eex As Exception
         End Try
         Try
-            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat)
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat, RegistryValueKind.String)
         Catch eex As Exception
         End Try
     End Sub
@@ -340,11 +367,11 @@ Class LockTimeThemePage
             TimeFormatTextBox.Text = My.Application.TimeFormat
             DateFormatTextBox.Text = My.Application.DateFormat
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeFormat", My.Application.TimeFormat, RegistryValueKind.String)
             Catch eex As Exception
             End Try
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFormat", My.Application.DateFormat, RegistryValueKind.String)
             Catch eex As Exception
             End Try
         End If
@@ -371,15 +398,15 @@ Class LockTimeThemePage
             My.Application.TimeColor = ColorDialog1.Color
             My.Application.SettingsState = 1
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", ColorDialog1.Color.R)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", ColorDialog1.Color.R, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", ColorDialog1.Color.G)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", ColorDialog1.Color.G, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", ColorDialog1.Color.B)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", ColorDialog1.Color.B, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
         End If
@@ -393,15 +420,15 @@ Class LockTimeThemePage
             My.Application.DateColor = ColorDialog1.Color
             My.Application.SettingsState = 1
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", ColorDialog1.Color.R)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", ColorDialog1.Color.R, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", ColorDialog1.Color.G)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", ColorDialog1.Color.G, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", ColorDialog1.Color.B)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", ColorDialog1.Color.B, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
         End If
@@ -418,27 +445,27 @@ Class LockTimeThemePage
         If result = ContentDialogResult.Primary Then
             If ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light Then
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 0)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 0, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 My.Application.TimeColor = System.Drawing.Color.FromArgb(0, 0, 0)
@@ -446,27 +473,27 @@ Class LockTimeThemePage
                 My.Application.SettingsState = 1
             Else
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorR", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorG", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TimeColorB", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorR", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorG", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 Try
-                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 255)
+                    My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateColorB", 255, RegistryValueKind.DWord)
                 Catch ex As Exception
                 End Try
                 My.Application.TimeColor = System.Drawing.Color.FromArgb(255, 255, 255)
