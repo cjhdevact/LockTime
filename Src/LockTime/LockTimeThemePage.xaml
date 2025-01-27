@@ -37,9 +37,6 @@
             <ui:InfoBar x:Name="UpdateInfoBar" Severity="Warning" IsClosable="True" Margin="0,0,0,4" Visibility="Collapsed"
                 Title="发现新版本" IsOpen="False"
                 Message="本次更新修复许多问题，强烈建议更新">
-                <ui:InfoBar.ActionButton>
-                    <Button x:Name="GotoUpdates" Content="Action" Click="GotoUpdates_Click"/>
-                </ui:InfoBar.ActionButton>
             </ui:InfoBar>
 
             <ui:SettingsCard Grid.Row="1" Description="控制是否隐藏屏保右下角的工具栏文字" Margin="0,0,0,4" Header="隐藏工具栏文字" IsEnabled="True">

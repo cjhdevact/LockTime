@@ -98,6 +98,26 @@ Class LockTimeWindow
                         MessageBox.Show("删除更新临时文件失败", "错误", MessageBoxButton.OK, MessageBoxImage.Error)
                     End Try
                 End If
+                Try
+                    System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory & "LockTime.exe")
+                Catch ex As Exception
+                    MessageBox.Show("删除旧版本文件失败", "错误", MessageBoxButton.OK, MessageBoxImage.Error)
+                End Try
+                Try
+                    File.Copy(AppDomain.CurrentDomain.BaseDirectory & "LockTimeNew.exe", AppDomain.CurrentDomain.BaseDirectory & "LockTime.exe", True)
+                Catch ex As Exception
+                    MessageBox.Show("更新程序失败", "错误", MessageBoxButton.OK, MessageBoxImage.Error)
+                End Try
+                System.Diagnostics.Process.Start(AppDomain.CurrentDomain.BaseDirectory & "LockTime.exe", "/cleanupdate2")
+                End
+            ElseIf CurCommand(i) = "/cleanupdate2" Then
+                If System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory & "LockTime.exe") Then
+                    Try
+                        System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory & "LockTime.exe")
+                    Catch ex As Exception
+                        MessageBox.Show("删除旧版本文件失败", "错误", MessageBoxButton.OK, MessageBoxImage.Error)
+                    End Try
+                End If
             ElseIf CurCommand(i) = "/windowmode" Then
                 Me.WindowStyle = WindowStyle.SingleBorderWindow
                 Me.WindowState = WindowState.Normal

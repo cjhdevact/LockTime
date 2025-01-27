@@ -521,8 +521,4 @@ Class LockTimeThemePage
             End If
         End If
     End Sub
-    '获取更新
-    Private Sub GotoUpdates_Click(sender As Object, e As RoutedEventArgs)
-
-    End Sub
 End Class
