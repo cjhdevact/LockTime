@@ -34,7 +34,7 @@ Class Application
     ''' <summary>
     ''' 全局变量
     ''' </summary>
-    Public Const AppBuildNumber As Integer = 0
+    Public Const AppBuildNumber As Integer = 1
     '更新设置判断状态
     Public SettingsState As Integer
     '隐藏工具栏文字
