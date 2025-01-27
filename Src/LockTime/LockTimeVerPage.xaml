@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="LockTimeVerPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+             xmlns:local="clr-namespace:LockTime"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" Width="500" FontSize="16" Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" x:Name="image" HorizontalAlignment="Left" Height="72" Width="72" Source="/Resources/appicon.png" Margin="100,0,0,0" />
+            <TextBlock Grid.Column="1" x:Name="textBlock" TextWrapping="Wrap" Text="时钟锁屏" FontSize="48" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        </Grid>
+        <Label Grid.Row="1" x:Name="CopyrightText" Content="Label"  Margin="100,0"/>
+        <Grid Grid.Row="2" Margin="100,0,50,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="45"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" x:Name="link" Content="" Margin="0,5,5,5" />
+            <Button Grid.Column="1" x:Name="CopyLink" Content="&#xe8c8;" FontFamily="Segoe Fluent Icons" FontSize="14" Width="40" Height="40" Click="Copy_Click" ToolTipService.ToolTip="复制" />
+        </Grid>
+    </Grid>
+</UserControl>

@@ -7,31 +7,58 @@
       xmlns:local="clr-namespace:LockTime"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
-      Title="LockTimeSettingPage">
+      Title="LockTimeSettingPage" Loaded="Page_Loaded">
     <ScrollViewer Padding="20,0" VerticalScrollBarVisibility="Auto">
     <Grid>
-            <ui:SettingsExpander Description="版权所有 © 2023-2025 CJH。保留所有权利。"
-                            Header="时钟锁屏">
-            <ui:SettingsExpander.HeaderIcon>
-                <Image Source="/Resources/app.ico"
-                            Width="20" Height="20" RenderOptions.BitmapScalingMode="HighQuality"/>
-            </ui:SettingsExpander.HeaderIcon>
-            <TextBlock Foreground="{DynamicResource {x:Static ui:ThemeKeys.TextFillColorSecondaryBrushKey}}"
-                    Text="0.10.0" />
-            <ui:SettingsExpander.Items>
-                <ui:SettingsCard HorizontalContentAlignment="Left"
-                                ContentAlignment="Left">
-                    <StackPanel Margin="-12,0,0,0"
-                        Orientation="Vertical">
-                        <ui:HyperlinkButton Content="Link 1" />
-                        <ui:HyperlinkButton Content="Link 2" />
-                        <ui:HyperlinkButton Content="Link 3" />
-                    </StackPanel>
-                </ui:SettingsCard>
-            </ui:SettingsExpander.Items>
-        </ui:SettingsExpander>
-        <ui:HyperlinkButton Margin="0,8,0,0"
-                    Content="Send feedback" />
-    </Grid>
+          <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+
+                <RowDefinition></RowDefinition>
+              
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+
+                <RowDefinition></RowDefinition>
+              
+                <RowDefinition></RowDefinition>
+
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <ui:InfoBar Grid.Row="0"  x:Name="UpdateErrInfoBar" Severity="Warning" IsClosable="True" Margin="0,0,0,4" Visibility="Collapsed"
+                Title="" IsOpen="False"
+                Message="">
+            </ui:InfoBar>
+
+            <ui:SettingsCard Grid.Row="1" Description="控制是否将程序窗口处于顶置状态" Margin="0,0,0,4" Header="始终顶置" IsEnabled="True">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe183;"/>
+                </ui:SettingsCard.HeaderIcon>
+                <ui:ToggleSwitch x:Name="TopMostTextToggleSwitch" />
+            </ui:SettingsCard>
+        
+            <ui:SettingsExpander Grid.Row="2" Grid.RowSpan="2"  x:Name="UpdateSettingsCard"  Margin="0,0,0,4" Description="" Header="检查更新" IsEnabled="True">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe895;"/>
+                </ui:SettingsExpander.HeaderIcon>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ui:ProgressRing Grid.Column="0" x:Name="ProgressRing1" Value="0" IsActive="False" IsIndeterminate="False" Margin="4,0,0,0"/>
+                    <Button Grid.Column="1" x:Name="CheckUpdateButton" Content="检查更新" Margin="4,0,0,0" Click="CheckUpdateButton_Click"/>
+                </Grid> 
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="" Header="在启动时检查更新" IsEnabled="True">
+                        <ui:ToggleSwitch x:Name="CheckUpdateOp" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+
+            <ui:HyperlinkButton Grid.Row="4" x:Name="AboutLockTime"  Margin="0,0,2,0" RaiseHyperlinkClicks="False" Content="关于时钟锁屏" />
+            <ui:HyperlinkButton Grid.Row="5" x:Name="CmdHelp"  Margin="0,0,2,0" RaiseHyperlinkClicks="False" Content="启动参数说明" />
+            <ui:HyperlinkButton Grid.Row="6" x:Name="BugReport" Margin="0,0,2,0" RaiseHyperlinkClicks="False" Content="反馈问题" />
+        </Grid>
     </ScrollViewer>
 </Page>

@@ -136,6 +136,23 @@ Class LockTimeThemePage
         '设置显示格式初始化
         TimeFormatTextBox.Text = My.Application.TimeFormat
         DateFormatTextBox.Text = My.Application.DateFormat
+
+        '############################################################
+        '初始化更新提示
+        If My.Application.UpdateSetting = 1 Then
+            If My.Application.UpdateOK = 1 Then
+                Me.UpdateInfoBar.Title = My.Application.UpdateTitle
+                Me.UpdateInfoBar.Message = My.Application.UpdateMsg
+                Me.UpdateInfoBar.IsOpen = True
+                Me.UpdateInfoBar.Visibility = Visibility.Visible
+            Else
+                Me.UpdateInfoBar.IsOpen = False
+                Me.UpdateInfoBar.Visibility = Visibility.Collapsed
+            End If
+        Else
+            Me.UpdateInfoBar.IsOpen = False
+            Me.UpdateInfoBar.Visibility = Visibility.Collapsed
+        End If
     End Sub
     '设置是否显示文字
     '通过把设置一个全局变量来表示是否更新设置，再在主窗口设置一个定时器来定时获取这个变量的状态来判断是否要更新主界面设置
@@ -376,7 +393,7 @@ Class LockTimeThemePage
             End Try
         End If
     End Sub
-
+    '显示格式说明
     Private Async Sub GetFormatHelp_Click(sender As Object, e As RoutedEventArgs) Handles GetFormatHelp.Click
         Dim dialog As ContentDialog = New ContentDialog()
         dialog.Title = "显示格式说明"
@@ -384,7 +401,9 @@ Class LockTimeThemePage
         'dialog.SecondaryButtonText = "Don't Save"
         'dialog.CloseButtonText = "取消"
         dialog.DefaultButton = ContentDialogButton.Primary
-        dialog.Content = New LockTimeFormatHelpPage
+        Dim HelpPage As LockTimeHelpPage = New LockTimeHelpPage
+        HelpPage.textBox1.Text = My.Resources.TimeFormat
+        dialog.Content = HelpPage
         'dialog.Content = "这将会退出时钟锁屏"
         Await dialog.ShowAsync()
         'Dim result = Await dialog.ShowAsync()
@@ -501,5 +520,9 @@ Class LockTimeThemePage
                 My.Application.SettingsState = 1
             End If
         End If
+    End Sub
+    '获取更新
+    Private Sub GotoUpdates_Click(sender As Object, e As RoutedEventArgs)
+
     End Sub
 End Class

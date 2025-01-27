@@ -61,21 +61,29 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  查找类似 预定义的日期/时间格式
+        '''  查找类似 
+        '''预定义的日期/时间格式
         '''下表标识预定义的日期和时间格式名称。 这些参数可以按名称用作 Format 函数的样式参数：
-        '''格式名称 							描述
-        '''General Date 或 G 				显示日期和时间。 例如， 3/12/2008 11:07:31 AM 。 日期显示由应用程序的当前区域性值确定。
-        '''Long Date 、 Medium Date 或 D 	根据当前区域性的长日期格式显示日期。 例如， Wednesday, March 12, 2008 。
-        '''Short Date 或 d 					使用当前区域性的短日期格式显示日期。 例如， 3/12/2008 。
-        '''								d 字符以用户定义的日期格式显示日期。
-        '''Long Time 、 Medium Time 或 T 	使用当前区域性的长时间格式显示时间;通常包括小时、分钟、秒。 例如， 11:07:31 AM 。
-        '''Short Time 或 t 					使用当前区域性的短时间格式显示时间。 例如， 11:07 AM 。
-        '''								对于使用用户定义的时间格式的 12 小时制的区域设置， t 字符显示 AM 或 PM 值。
-        '''f [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        '''格式名称                        描述
+        '''General Date 或 G               显示日期和时间。 例如， 3/12/2008 11:07:31 AM 。 日期显示由应用程序的当前区域性值确定。
+        '''Long Date 、 Medium Date 或 D   根据当前区域性的长日期格式显示日期。 例如， Wednesday, March 12, 2008 。
+        '''Short Date 或 d                 使用当前区域性的短日期格式显示日期。 例如， 3/12/2008 。
+        '''                                d 字符以用户定义的日期格式显示日期。
+        '''Long Time 、 Medium Time 或 T   使用当前区域性的长时间格式显示时间;通常包括小时、分钟、秒。 例如， 11:07:31 AM 。
+        '''Short Time 或 t                 使用当前区域性的短时间格式显示 [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
         Friend ReadOnly Property TimeFormat() As String
             Get
                 Return ResourceManager.GetString("TimeFormat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找类似 https://cjhdevact.github.io/otherprojects/LockTime/upinfo.json 的本地化字符串。
+        '''</summary>
+        Friend ReadOnly Property updateurl() As String
+            Get
+                Return ResourceManager.GetString("updateurl", resourceCulture)
             End Get
         End Property
     End Module

@@ -11,12 +11,15 @@
         ui:WindowHelper.SystemBackdropType="Mica"
         ui:TitleBar.IsBackButtonVisible="False"
         ui:TitleBar.IsBackEnabled="False"
+        ui:TitleBar.IsIconVisible="True"
         ui:WindowHelper.FixMaximizedWindow="True"
         ui:TitleBar.Height="36"
         xmlns:local="clr-namespace:LockTime"
         mc:Ignorable="d"
         Title="设置" Height="600" Width="800" >
-    <ui:NavigationView x:Name="SettingNV" Header="设置" IsTabStop="False" PaneDisplayMode="LeftCompact">
+    <!--ui:TitleBar.BackButtonCommand=""
+        ui:TitleBar.BackRequested="Window_BackRequested"-->
+    <ui:NavigationView x:Name="SettingNV" Header="设置" PaneDisplayMode="LeftCompact" IsBackButtonVisible="Collapsed">
         <ui:NavigationView.MenuItems>
             <ui:NavigationViewItem  x:Name="LockTime_LockTimeThemePage" Content="个性化">
                 <ui:NavigationViewItem.Icon>
@@ -28,11 +31,6 @@
             <ui:NavigationViewItem  x:Name="LockTime_LockTimeSettingPage" Content="设置">
                 <ui:NavigationViewItem.Icon>
                     <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Settings}"/>
-                </ui:NavigationViewItem.Icon>
-            </ui:NavigationViewItem>
-            <ui:NavigationViewItem  x:Name="LockTime_LockTimeAboutPage" Content="关于">
-                <ui:NavigationViewItem.Icon>
-                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Info}"/>
                 </ui:NavigationViewItem.Icon>
             </ui:NavigationViewItem>
         </ui:NavigationView.FooterMenuItems>

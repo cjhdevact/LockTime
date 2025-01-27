@@ -12,6 +12,8 @@
     <Grid>
         <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
+
+                <RowDefinition></RowDefinition>
             
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -31,15 +33,23 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-        
-            <ui:SettingsCard Grid.Row="0" Description="控制是否隐藏屏保右下角的工具栏文字" Margin="0,0,0,4" Header="隐藏工具栏文字" IsEnabled="True">
+
+            <ui:InfoBar x:Name="UpdateInfoBar" Severity="Warning" IsClosable="True" Margin="0,0,0,4" Visibility="Collapsed"
+                Title="发现新版本" IsOpen="False"
+                Message="本次更新修复许多问题，强烈建议更新">
+                <ui:InfoBar.ActionButton>
+                    <Button x:Name="GotoUpdates" Content="Action" Click="GotoUpdates_Click"/>
+                </ui:InfoBar.ActionButton>
+            </ui:InfoBar>
+
+            <ui:SettingsCard Grid.Row="1" Description="控制是否隐藏屏保右下角的工具栏文字" Margin="0,0,0,4" Header="隐藏工具栏文字" IsEnabled="True">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xf683;"/>
                 </ui:SettingsCard.HeaderIcon>
                 <ui:ToggleSwitch x:Name="HideTextToggleSwitch" />
             </ui:SettingsCard>
         
-            <ui:SettingsExpander Grid.Row="1" Grid.RowSpan="4" x:Name="TimeFontSettingsCard"  Margin="0,0,0,4" Description="" Header="时间字体" IsEnabled="True">
+            <ui:SettingsExpander Grid.Row="2" Grid.RowSpan="4" x:Name="TimeFontSettingsCard"  Margin="0,0,0,4" Description="" Header="时间字体" IsEnabled="True">
             <ui:SettingsExpander.HeaderIcon>
                 <ui:FontIcon Glyph="&#xe8d2;"/>
             </ui:SettingsExpander.HeaderIcon>
@@ -83,7 +93,7 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
         
-            <ui:SettingsExpander Grid.Row="5" Grid.RowSpan="4"  x:Name="DateFontSettingsCard"  Margin="0,0,0,4" Description="" Header="日期字体" IsEnabled="True">
+            <ui:SettingsExpander Grid.Row="6" Grid.RowSpan="4"  x:Name="DateFontSettingsCard"  Margin="0,0,0,4" Description="" Header="日期字体" IsEnabled="True">
             <ui:SettingsExpander.HeaderIcon>
                 <ui:FontIcon Glyph="&#xe8d2;"/>
             </ui:SettingsExpander.HeaderIcon>
@@ -127,7 +137,7 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
-            <ui:SettingsExpander Grid.Row="9" Grid.RowSpan="3"  x:Name="FormatSettingsCard"  Margin="0,0,0,4" Description="" Header="显示格式" IsEnabled="True">
+            <ui:SettingsExpander Grid.Row="10" Grid.RowSpan="3"  x:Name="FormatSettingsCard"  Margin="0,0,0,4" Description="" Header="显示格式" IsEnabled="True">
                 <ui:SettingsExpander.HeaderIcon>
                     <ui:FontIcon Glyph="&#xec34;"/>
                 </ui:SettingsExpander.HeaderIcon>
@@ -156,7 +166,7 @@
             </ui:SettingsExpander>
 
 
-            <ui:SettingsExpander Grid.Row="12" Grid.RowSpan="3"  x:Name="ColorSettingsCard"  Margin="0,0,0,4" Description="" Header="颜色" IsEnabled="True">
+            <ui:SettingsExpander Grid.Row="13" Grid.RowSpan="3"  x:Name="ColorSettingsCard"  Margin="0,0,0,4" Description="" Header="颜色" IsEnabled="True">
                 <ui:SettingsExpander.HeaderIcon>
                     <ui:FontIcon Glyph="&#xe790;"/>
                 </ui:SettingsExpander.HeaderIcon>

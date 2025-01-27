@@ -1,0 +1,11 @@
+{
+  "upl": "http://127.0.0.1/LockTimeUpdate.exe",
+  "uf": 0,
+  "rurl": "",
+  "upt": "有新版本 {upver}，当前版本 {cuver}",
+  "upm": [
+    "有新版本 {upver}，当前版本 {cuver}",
+    "更新内容1",
+    "更新内容2"
+  ]
+}

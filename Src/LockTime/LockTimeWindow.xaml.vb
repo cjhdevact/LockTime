@@ -32,7 +32,9 @@ Imports iNKORE.UI.WPF.Modern
 Imports iNKORE.UI.WPF.Modern.Controls.Helpers
 Imports System.Reflection
 Imports Microsoft.Win32
-
+Imports System.Net
+Imports System.IO
+Imports Newtonsoft.Json.Linq
 Class LockTimeWindow
     Dim Timer1 As New DispatcherTimer '更新时间的定时器
     Dim UpSettingTimer As New DispatcherTimer '定时更新设置定时器
@@ -60,8 +62,12 @@ Class LockTimeWindow
         '启动定时器
         Timer1.Start()
         UpSettingTimer.Start()
-
         AppStartCmds(sender, e)  '处理启动命令行
+
+        If My.Application.UpdateSetting = 1 Then
+            'Dispatcher.Invoke(AddressOf PrgGetUpdate, DispatcherPriority.Background)
+            Dispatcher.BeginInvoke(DispatcherPriority.Background, New Action(AddressOf PrgGetUpdate))
+        End If
     End Sub
 
 #Region "处理启动命令行"
@@ -84,6 +90,14 @@ Class LockTimeWindow
                 Call Rightb_Click(sender, e)
             ElseIf CurCommand(i) = "/hidetoolbar" Then
                 CommandBar1.Visibility = Visibility.Hidden
+            ElseIf CurCommand(i) = "/cleanupdate" Then
+                If System.IO.File.Exists(AppDomain.CurrentDomain.BaseDirectory & "LockTimeUpdateTmp.exe") Then
+                    Try
+                        System.IO.File.Delete(AppDomain.CurrentDomain.BaseDirectory & "LockTimeUpdateTmp.exe")
+                    Catch ex As Exception
+                        MessageBox.Show("删除更新临时文件失败", "错误", MessageBoxButton.OK, MessageBoxImage.Error)
+                    End Try
+                End If
             ElseIf CurCommand(i) = "/windowmode" Then
                 Me.WindowStyle = WindowStyle.SingleBorderWindow
                 Me.WindowState = WindowState.Normal
@@ -379,6 +393,31 @@ Class LockTimeWindow
         End If
         My.Application.DateColor = Color.FromArgb(DateColorR, DateColorG, DateColorB)
         Me.datelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(My.Application.DateColor.R, My.Application.DateColor.G, My.Application.DateColor.B))
+
+        '顶置
+        My.Application.AppTopMost = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TopMost", -1)
+        If My.Application.AppTopMost < 0 Or My.Application.AppTopMost > 1 Then
+            My.Application.AppTopMost = 1
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "TopMost", 1, RegistryValueKind.DWord)
+            Catch ex As Exception
+            End Try
+        End If
+        If My.Application.AppTopMost = 1 Then
+            Me.Topmost = True
+        Else
+            Me.Topmost = False
+        End If
+
+        '自动更新
+        My.Application.UpdateSetting = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "AutoGetUpdate", -1)
+        If My.Application.UpdateSetting < 0 Or My.Application.UpdateSetting > 1 Then
+            My.Application.UpdateSetting = 1
+            Try
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "AutoGetUpdate", 1, RegistryValueKind.DWord)
+            Catch ex As Exception
+            End Try
+        End If
     End Sub
 #End Region
 
@@ -448,6 +487,135 @@ Class LockTimeWindow
         Me.timelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(My.Application.TimeColor.R, My.Application.TimeColor.G, My.Application.TimeColor.B))
         Me.datelabel.Foreground = New SolidColorBrush(System.Windows.Media.Color.FromRgb(My.Application.DateColor.R, My.Application.DateColor.G, My.Application.DateColor.B))
     End Sub
+
+    '设置是否顶置
+    Sub SetUITopMost()
+        If My.Application.AppTopMost = 1 Then
+            Me.Topmost = True
+        Else
+            Me.Topmost = False
+        End If
+    End Sub
+
+#End Region
+
+#Region "检查更新模块"
+    '获取更新
+    Public Sub PrgGetUpdate()
+        Dim Upstate As Boolean
+        Upstate = CheckUpdate()
+        If Upstate = True Then
+            Dim Getup As Integer
+            Getup = GetUpdate()
+            If Not Getup = 2 Then
+                My.Application.UpdateOK = 0
+            Else
+                My.Application.UpdateOK = 1
+                My.Application.UpdateTitle = Replace(My.Application.UpdateTitle, "{upver}", My.Application.UpdateVer)
+                My.Application.UpdateMsg = Replace(My.Application.UpdateMsg, "{upver}", My.Application.UpdateVer)
+                My.Application.UpdateTitle = Replace(My.Application.UpdateTitle, "{cuver}", My.Application.Info.Version.ToString)
+                My.Application.UpdateMsg = Replace(My.Application.UpdateMsg, "{cuver}", My.Application.Info.Version.ToString)
+            End If
+        Else
+            My.Application.UpdateOK = 0
+        End If
+    End Sub
+
+    '检查更新
+    Public Function CheckUpdate()
+        '版本检查
+        Dim verf As String
+        Dim verstr As String = ""
+        Dim vernum As Integer
+        verf = My.Application.GetSource(My.Resources.updateurl & "/upver.json")
+        If verf = "" Then
+            Return False
+            Exit Function
+        End If
+        Try
+            Dim NoticeObject As JObject = JObject.Parse(verf)
+            vernum = CInt(NoticeObject("verm"))
+            verstr = CStr(NoticeObject("ver"))
+        Catch ex As Exception
+        End Try
+        Dim needupt As Boolean
+        If vernum > My.Application.AppBuildNumber Then
+            needupt = True
+        Else
+            needupt = False
+        End If
+        My.Application.UpdateVer = verstr
+        Return needupt
+    End Function
+    '获取更新
+    Public Function GetUpdate()
+        '获取更新信息
+        Dim veri As String
+        veri = My.Application.GetSource(My.Resources.updateurl & "/upinfo.json")
+        If veri = "" Then
+            Return (1)
+            Exit Function
+        End If
+        Dim applink As String = ""
+        Dim updatetitle As String = ""
+        Dim updateinfo As String = ""
+        Dim focupdate As Integer
+        Dim rurl As String = ""
+        Try
+            Dim VerObject As JObject = JObject.Parse(veri)
+
+            rurl = CStr(VerObject("rurl"))
+            If rurl <> "" Then
+                Exit Try
+            End If
+
+            applink = CStr(VerObject("upl"))
+            updatetitle = CStr(VerObject("upt"))
+            Dim InfoText As JArray = VerObject("upm")
+            For i = 0 To InfoText.Count - 1
+                If i = InfoText.Count - 1 Then
+                    updateinfo = updateinfo & InfoText(i).ToString
+                Else
+                    updateinfo = updateinfo & InfoText(i).ToString & vbCrLf
+                End If
+            Next
+            'updateinfo = CStr(VerObject("updateinfo"))
+            focupdate = CStr(VerObject("uf"))
+            'verstr = CStr(NoticeObject("ver"))
+        Catch ex As Exception
+        End Try
+        '获取更新信息（重定向）
+        If rurl <> "" Then
+            Dim veri2 As String
+            veri2 = My.Application.GetSource(rurl)
+            If veri2 = "" Then
+                Return (1)
+                Exit Function
+            End If
+            Try
+                Dim VerObject As JObject = JObject.Parse(veri2)
+
+                applink = CStr(VerObject("upl"))
+                updatetitle = CStr(VerObject("upt"))
+                Dim InfoText As JArray = VerObject("upm")
+                For i = 0 To InfoText.Count - 1
+                    If i = InfoText.Count - 1 Then
+                        updateinfo = updateinfo & InfoText(i).ToString
+                    Else
+                        updateinfo = updateinfo & InfoText(i).ToString & vbCrLf
+                    End If
+                Next
+                'updateinfo = CStr(VerObject("updateinfo"))
+                focupdate = CStr(VerObject("uf"))
+                'verstr = CStr(NoticeObject("ver"))
+            Catch ex As Exception
+            End Try
+        End If
+        My.Application.UpdateUrl = applink
+        My.Application.UpdateTitle = updatetitle
+        My.Application.UpdateMsg = updateinfo
+        Return (2)
+    End Function
 #End Region
 
     '获取系统版本函数
@@ -507,6 +675,7 @@ Class LockTimeWindow
             SetUIText()
             SetUIFont()
             SetUIColor()
+            SetUITopMost()
             'If HideTextState = 1 Then
             '    Me.Dispatcher.Invoke(New HideTextStateSub(AddressOf SetUIText), 0)
             'Else
@@ -562,9 +731,9 @@ Class LockTimeWindow
                 Try
                     My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "Theme", "Light", RegistryValueKind.String)
                 Catch ex As Exception
-                    End Try
-                End If
-            Else
+                End Try
+            End If
+        Else
             ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark
             Themeb.Label = "深色"
             Themeb.ToolTip = "当前颜色为深色模式"

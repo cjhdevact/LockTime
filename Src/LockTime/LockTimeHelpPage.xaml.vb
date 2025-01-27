@@ -17,16 +17,15 @@
 '****************************************************************************
 '/*****************************************************\
 '*                                                     *
-'*     LockTime - LockTimeFormatHelpPage.xaml.vb       *
+'*     LockTime - LockTimeHelpPage.xaml.vb             *
 '*                                                     *
 '*     Copyright (c) CJH.                              *
 '*                                                     *
 '*     LockTime Format Page Code.                      *
 '*                                                     *
 '\*****************************************************/
-Class LockTimeFormatHelpPage
+Class LockTimeHelpPage
     Private Sub Page_Loaded(sender As Object, e As RoutedEventArgs)
-        textBox1.Text = My.Resources.TimeFormat
         textBox1.IsReadOnly = True
     End Sub
 End Class

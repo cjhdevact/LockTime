@@ -55,7 +55,7 @@
                     <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xf5ee;" />
                 </ui:AppBarButton.Icon>
             </ui:AppBarButton>
-            <ui:AppBarButton x:Name="Windowb" Label="窗口" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Windowsb_Click" ToolTipService.ToolTip="窗口模式" >
+            <ui:AppBarButton x:Name="Windowb" Label="窗口" FontSize="24" VerticalAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Windowsb_Click" ToolTipService.ToolTip="窗口模式" >
                 <ui:AppBarButton.Icon>
                     <ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xeb41;" />
                     <!--<ui:FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe740;" />-->

@@ -74,6 +74,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\iNKORE.UI.WPF.Modern.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ValueTuple, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -105,8 +108,8 @@
     <Compile Include="LockTimeSettingWindow.xaml.vb">
       <DependentUpon>LockTimeSettingWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LockTimeFormatHelpPage.xaml.vb">
-      <DependentUpon>LockTimeFormatHelpPage.xaml</DependentUpon>
+    <Compile Include="LockTimeHelpPage.xaml.vb">
+      <DependentUpon>LockTimeHelpPage.xaml</DependentUpon>
     </Compile>
     <Page Include="LockTimeAboutPage.xaml">
       <SubType>Designer</SubType>
@@ -117,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LockTimeThemePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LockTimeVerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,6 +141,9 @@
     <Compile Include="LockTimeThemePage.xaml.vb">
       <DependentUpon>LockTimeThemePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LockTimeVerPage.xaml.vb">
+      <DependentUpon>LockTimeVerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LockTimeWindow.xaml.vb">
       <DependentUpon>LockTimeWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -142,7 +152,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LockTimeFormatHelpPage.xaml">
+    <Page Include="LockTimeHelpPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -204,6 +214,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TimeFormat.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\appicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\updateurl.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
