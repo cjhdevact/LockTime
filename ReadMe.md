@@ -1,5 +1,5 @@
 <h1 align="center">
-  LockTime - 时钟锁屏
+  <a href="https://github.com/cjhdevact/LockTime">LockTime - 时钟锁屏</a>
 </h1>
 
 ## 📝关于本项目
