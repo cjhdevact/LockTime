@@ -76,6 +76,7 @@
                             <ComboBoxItem>84</ComboBoxItem>
                             <ComboBoxItem>96</ComboBoxItem>
                             <ComboBoxItem>100</ComboBoxItem>
+                            <ComboBoxItem>150</ComboBoxItem>
                             <ComboBoxItem>200</ComboBoxItem>
                         </ComboBox>
                     </ui:SettingsCard>
@@ -120,6 +121,7 @@
                             <ComboBoxItem>84</ComboBoxItem>
                             <ComboBoxItem>96</ComboBoxItem>
                             <ComboBoxItem>100</ComboBoxItem>
+                            <ComboBoxItem>150</ComboBoxItem>
                             <ComboBoxItem>200</ComboBoxItem>
                         </ComboBox>
                     </ui:SettingsCard>
