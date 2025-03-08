@@ -305,11 +305,11 @@ Class LockTimeThemePage
             My.Application.DateFontSize = 36
             My.Application.DateFontName = "Microsoft YaHei UI"
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockDate\2.0\Settings", "DateFontSize", My.Application.DateFontSize, RegistryValueKind.DWord)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontSize", My.Application.DateFontSize, RegistryValueKind.DWord)
             Catch ex As Exception
             End Try
             Try
-                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockDate\2.0\Settings", "DateFontName", My.Application.DateFontName, RegistryValueKind.String)
+                My.Computer.Registry.SetValue("HKEY_CURRENT_USER\Software\CJH\LockTime\2.0\Settings", "DateFontName", My.Application.DateFontName, RegistryValueKind.String)
             Catch ex As Exception
             End Try
             DateFontStylePreview.FontSize = My.Application.DateFontSize
